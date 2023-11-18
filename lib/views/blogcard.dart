@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frogger/views/like.dart';
 
 class BlogCard extends StatelessWidget {
   final String title;
@@ -28,10 +29,7 @@ class BlogCard extends StatelessWidget {
                 Text(content),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(date),
-                    Icon(liked ? Icons.favorite : Icons.favorite_border)
-                  ],
+                  children: [Text(date), Like(liked: liked)],
                 )
               ],
             ),
