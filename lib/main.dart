@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frogger/models/blogentry.dart';
 import 'package:frogger/views/blogcard.dart';
+import 'package:frogger/views/newblogbutton.dart';
 
 void main() {
   runApp(const MyApp());
@@ -67,6 +68,16 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  openBlog(String blogId) {
+    blogList.where((element) => element.uuid == blogId).forEach((element) { print(element.uuid); });
+  }
+
+  likeBlog(String blogId) {
+    setState(() {
+      blogList.where((element) => element.uuid == blogId).forEach((element) { element.liked = !element.liked; });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,18 +100,17 @@ class _MyHomePageState extends State<MyHomePage> {
                             title: blog.title,
                             content: blog.content,
                             date: blog.creationDate.toString(),
-                            liked: blog.liked);
+                            liked: blog.liked,
+                            onBlogPressed: (){ openBlog(blog.uuid); },
+                            onLikePressed: (){ likeBlog(blog.uuid); },);
                       })),
-              // Basic button to add new blog entry
-              TextButton(
-                  onPressed: () {
-                    addEntry(BlogEntry(
+                      NewBlogButton(text: "Add new blog", onPressed: () {
+                        addEntry(BlogEntry(
                         title: "test",
                         content: "wow",
                         creationDate: DateTime.now(),
                         liked: false));
-                  },
-                  child: Text("Add"))
+                      }),
             ],
           ),
         ));
