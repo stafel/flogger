@@ -48,7 +48,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final blogList = [
+  var blogList = [
     BlogEntry(
         title: "Hello",
         content: "World!",
@@ -61,6 +61,12 @@ class _MyHomePageState extends State<MyHomePage> {
         liked: false)
   ];
 
+  addEntry(BlogEntry newEntry) {
+    setState(() {
+      blogList.add(newEntry);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,19 +75,34 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
         ),
         body: Center(
-          child: ListView.builder(
-              // the number of items in the list
-              itemCount: blogList.length,
+          child: Column(
+            children: [
+              Expanded(
+                  child: ListView.builder(
+                      // the number of items in the list
+                      itemCount: blogList.length,
 
-              // display each item of the product list
-              itemBuilder: (context, index) {
-                var blog = blogList[index];
-                return BlogCard(
-                    title: blog.title,
-                    content: blog.content,
-                    date: blog.creationDate.toString(),
-                    liked: blog.liked);
-              }),
+                      // display each item of the product list
+                      itemBuilder: (context, index) {
+                        var blog = blogList[index];
+                        return BlogCard(
+                            title: blog.title,
+                            content: blog.content,
+                            date: blog.creationDate.toString(),
+                            liked: blog.liked);
+                      })),
+              // Basic button to add new blog entry
+              TextButton(
+                  onPressed: () {
+                    addEntry(BlogEntry(
+                        title: "test",
+                        content: "wow",
+                        creationDate: DateTime.now(),
+                        liked: false));
+                  },
+                  child: Text("Add"))
+            ],
+          ),
         ));
   }
 }
