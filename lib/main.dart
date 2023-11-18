@@ -84,6 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
+          leading: Image.asset("images/logo.png"),
         ),
         body: Center(
           child: Column(
