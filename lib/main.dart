@@ -34,13 +34,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.limeAccent),
         useMaterial3: true,
       ),
-      home: MyHomePage(title: 'Frogger'),
+      home: const MyHomePage(title: 'Frogger'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required this.title});
 
   final String title;
 
