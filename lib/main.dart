@@ -16,24 +16,23 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Frogger',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.limeAccent),
-        useMaterial3: true,
-      ),
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.limeAccent, brightness: Brightness.light),
+          useMaterial3: true,
+          textTheme: const TextTheme(
+              titleLarge: TextStyle(
+            fontSize: 40,
+            fontStyle: FontStyle.italic,
+          ))),
+      darkTheme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.limeAccent, brightness: Brightness.dark),
+          useMaterial3: true,
+          textTheme: const TextTheme(
+              titleLarge: TextStyle(
+            fontSize: 40,
+            fontStyle: FontStyle.italic,
+          ))),
       home: const MyHomePage(title: 'Frogger'),
     );
   }
@@ -69,12 +68,16 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   openBlog(String blogId) {
-    blogList.where((element) => element.uuid == blogId).forEach((element) { print(element.uuid); });
+    blogList.where((element) => element.uuid == blogId).forEach((element) {
+      //print(element.uuid);
+    });
   }
 
   likeBlog(String blogId) {
     setState(() {
-      blogList.where((element) => element.uuid == blogId).forEach((element) { element.liked = !element.liked; });
+      blogList.where((element) => element.uuid == blogId).forEach((element) {
+        element.liked = !element.liked;
+      });
     });
   }
 
@@ -89,6 +92,9 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Center(
           child: Column(
             children: [
+              Image.asset(
+                "images/logo.png",
+              ),
               Expanded(
                   child: ListView.builder(
                       // the number of items in the list
@@ -98,20 +104,27 @@ class _MyHomePageState extends State<MyHomePage> {
                       itemBuilder: (context, index) {
                         var blog = blogList[index];
                         return BlogCard(
-                            title: blog.title,
-                            content: blog.content,
-                            date: blog.creationDate.toString(),
-                            liked: blog.liked,
-                            onBlogPressed: (){ openBlog(blog.uuid); },
-                            onLikePressed: (){ likeBlog(blog.uuid); },);
+                          title: blog.title,
+                          content: blog.content,
+                          date: blog.creationDate.toString(),
+                          liked: blog.liked,
+                          onBlogPressed: () {
+                            openBlog(blog.uuid);
+                          },
+                          onLikePressed: () {
+                            likeBlog(blog.uuid);
+                          },
+                        );
                       })),
-                      NewBlogButton(text: "Add new blog", onPressed: () {
-                        addEntry(BlogEntry(
+              NewBlogButton(
+                  text: "Add new blog",
+                  onPressed: () {
+                    addEntry(BlogEntry(
                         title: "test",
                         content: "wow",
                         creationDate: DateTime.now(),
                         liked: false));
-                      }),
+                  }),
             ],
           ),
         ));

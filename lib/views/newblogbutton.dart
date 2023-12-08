@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NewBlogButton extends StatelessWidget {
-  const NewBlogButton({
-    super.key,
-    required this.text,
-    required this.onPressed
-  });
+  const NewBlogButton({super.key, required this.text, required this.onPressed});
 
   final VoidCallback onPressed;
 
@@ -14,8 +10,15 @@ class NewBlogButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: () { onPressed(); },
-        child: Text(text),
-        );
+      onPressed: () {
+        onPressed();
+      },
+      child: Text(
+        text,
+        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+      ),
+    );
   }
 }
