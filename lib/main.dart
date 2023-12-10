@@ -102,9 +102,6 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Center(
           child: Column(
             children: [
-              Image.asset(
-                "images/logo.png",
-              ),
               Expanded(
                   child: ListView.builder(
                       // the number of items in the list
