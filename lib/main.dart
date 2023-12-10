@@ -84,10 +84,20 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [ListTile(title: Text("T"),)],
+          ),
+        ),
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
-          leading: Image.asset("images/logo.png"),
+          leading: Builder(builder: (context) => IconButton( 
+            icon: Image.asset("images/logo.png"),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+          ),
         ),
         body: Center(
           child: Column(
