@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:frogger/models/blogentry.dart';
 import 'package:frogger/views/blogcard.dart';
+import 'package:frogger/views/blogdetailpage.dart';
 import 'package:frogger/views/newblogbutton.dart';
 import 'package:frogger/views/logodrawer.dart';
 import 'package:frogger/views/customdrawer.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 
   // This widget is the root of your application.
   @override
@@ -35,15 +39,39 @@ class MyApp extends StatelessWidget {
             fontSize: 40,
             fontStyle: FontStyle.italic,
           ))),
-      home: const MyHomePage(title: 'Frogger'),
+
+      builder: (context, child) => BaseView(title: 'Frogger', child: child!),
+      navigatorKey: navigatorKey,
+      initialRoute: 'homeRoute',
+      routes: {
+        'homeRoute': (context) => const MyHomePage(),
+        'blogdetailRoute': (context) => BlogDetailPage(),
+      },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
+// wrapper to reuse drawer and appbar
+class BaseView extends StatelessWidget {
+  const BaseView({super.key, required this.child, required this.title});
+  final Widget child;
   final String title;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        drawer: const CustomDrawer(),
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Text(title),
+          leading: const LogoDrawer(),
+        ),
+        body: child,
+      );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -72,6 +100,9 @@ class _MyHomePageState extends State<MyHomePage> {
   openBlog(String blogId) {
     blogList.where((element) => element.uuid == blogId).forEach((element) {
       //print(element.uuid);
+      //navigatorKey.currentState!.pushNamed(routeName);
+      //Navigator.push(context, MaterialPageRoute<void>(builder: (context) => BlogDetailPage()));
+      Navigator.pushNamed(context, 'blogdetailRoute');
     });
   }
 
@@ -85,14 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        drawer: const CustomDrawer(),
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text(widget.title),
-          leading: const LogoDrawer(),
-        ),
-        body: Center(
+    return Center(
           child: Column(
             children: [
               Expanded(
@@ -127,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   }),
             ],
           ),
-        ));
+        );
   }
 }
 

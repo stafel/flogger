@@ -23,7 +23,9 @@ class BlogCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
-        onTap: () { onBlogPressed(); },
+        onTap: () { 
+          onBlogPressed(); 
+        },
         child: Column(
         children: [
           ListTile(

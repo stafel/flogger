@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frogger/views/blogdetailpage.dart';
 
 class NewBlogButton extends StatelessWidget {
   const NewBlogButton({super.key, required this.text, required this.onPressed});
