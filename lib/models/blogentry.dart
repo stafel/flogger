@@ -16,7 +16,7 @@ class BlogEntry {
       required this.liked});
 
   factory BlogEntry.fromJson(Map<String, dynamic> json) {
-    print( json );
+    // print( json ); // for debugging
     return switch (json) {
       {
         '\$id': String id,
