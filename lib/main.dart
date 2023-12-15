@@ -89,6 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     setState(() {
       /* bloglist was updated from api */
+      blogList = blogList;
     });
   }
 
