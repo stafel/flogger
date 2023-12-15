@@ -80,19 +80,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  late Future<List<BlogEntry>> blogEntries;
+
   @override
   void initState() {
+    blogEntries = BlogApi().fetchBlogs();
     super.initState();
-    loadBlogs(); // moved into separate method for async
-  }
-
-  loadBlogs() async {
-    blogList = await BlogApi().fetchBlogs();
-
-    setState(() {
-      /* bloglist was updated from api */
-      blogList = blogList;
-    });
   }
 
   var blogList = [
@@ -139,26 +132,46 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             children: [
               Expanded(
-                  child: ListView.builder(
-                      // the number of items in the list
-                      itemCount: blogList.length,
+                  child: FutureBuilder(
+                    future: blogEntries,
+                    builder: (context, data) { 
+                        if (data.hasData) {
 
-                      // display each item of the product list
-                      itemBuilder: (context, index) {
-                        var blog = blogList[index];
-                        return BlogCard(
-                          title: blog.title,
-                          content: blog.content,
-                          date: blog.creationDate.toString(),
-                          liked: blog.liked,
-                          onBlogPressed: () {
-                            openBlog(blog.id);
-                          },
-                          onLikePressed: () {
-                            likeBlog(blog.id);
-                          },
-                        );
-                      })),
+                          if (data.data == null) {
+                            return const Text("No blogs found");
+                          }
+
+                          return ListView.builder(
+                            // the number of items in the list
+                            itemCount: data.data!.length,
+
+                            // display each item of the product list
+                            itemBuilder: (context, index) {
+                              var blog = data.data![index];
+                              return BlogCard(
+                                title: blog.title,
+                                content: blog.content,
+                                date: blog.creationDate.toString(),
+                                liked: blog.liked,
+                                onBlogPressed: () {
+                                  openBlog(blog.id);
+                                },
+                                onLikePressed: () {
+                                  likeBlog(blog.id);
+                                },
+                              );
+                            });
+                        } else 
+                        {
+                          if (data.hasError) {
+                            return const Text("Error");
+                          }
+                          return const Text("Loading");
+                        } 
+                      }
+                    
+                  ),
+              ),
               NewBlogButton(
                   text: "Add new blog",
                   onPressed: () {
