@@ -80,8 +80,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  _MyHomePageState() {
-    loadBlogs();
+  @override
+  void initState() {
+    super.initState();
+    loadBlogs(); // moved into separate method for async
   }
 
   loadBlogs() async {
