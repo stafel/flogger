@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frogger/models/blogentry.dart';
+import 'package:frogger/services/blogapi.dart';
 import 'package:frogger/views/blogcard.dart';
 import 'package:frogger/views/blogdetailpage.dart';
 import 'package:frogger/views/newblogbutton.dart';
@@ -78,13 +79,28 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  _MyHomePageState() {
+    loadBlogs();
+  }
+
+  loadBlogs() async {
+    blogList = await BlogApi().fetchBlogs();
+
+    setState(() {
+      /* bloglist was updated from api */
+    });
+  }
+
   var blogList = [
     BlogEntry(
+        id: '1',
         title: "Hello",
         content: "World!",
         creationDate: DateTime.now(),
         liked: true),
     BlogEntry(
+        id: '2',
         title: "Top 10 frogs",
         content: "Number 3 will shock you!!1!",
         creationDate: DateTime.now(),
@@ -98,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   openBlog(String blogId) {
-    blogList.where((element) => element.uuid == blogId).forEach((element) {
+    blogList.where((element) => element.id == blogId).forEach((element) {
       //print(element.uuid);
       //navigatorKey.currentState!.pushNamed(routeName);
       //Navigator.push(context, MaterialPageRoute<void>(builder: (context) => BlogDetailPage()));
@@ -108,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   likeBlog(String blogId) {
     setState(() {
-      blogList.where((element) => element.uuid == blogId).forEach((element) {
+      blogList.where((element) => element.id == blogId).forEach((element) {
         element.liked = !element.liked;
       });
     });
@@ -133,10 +149,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           date: blog.creationDate.toString(),
                           liked: blog.liked,
                           onBlogPressed: () {
-                            openBlog(blog.uuid);
+                            openBlog(blog.id);
                           },
                           onLikePressed: () {
-                            likeBlog(blog.uuid);
+                            likeBlog(blog.id);
                           },
                         );
                       })),
@@ -144,6 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   text: "Add new blog",
                   onPressed: () {
                     addEntry(BlogEntry(
+                        id: '3',
                         title: "test",
                         content: "wow",
                         creationDate: DateTime.now(),
