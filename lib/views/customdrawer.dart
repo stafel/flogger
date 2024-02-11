@@ -10,7 +10,7 @@ class CustomDrawer extends StatelessWidget {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
-        children: [ListTile(title: Text("T"),)],
+        children: const [ListTile(title: Text("T"),)],
       ),
     );
   }

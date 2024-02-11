@@ -1,4 +1,3 @@
-import 'package:uuid/uuid.dart';
 
 class BlogEntry {
   //String uuid = const Uuid().v1();

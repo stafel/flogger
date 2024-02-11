@@ -12,5 +12,6 @@
             "format": "compact"
         }
     }
-  }
+  },
+  "connectionError": "Could not connect to the server"
 }

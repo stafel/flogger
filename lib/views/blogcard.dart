@@ -1,44 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:frogger/models/blogentry.dart';
 import 'package:frogger/views/like.dart';
 
 class BlogCard extends StatelessWidget {
-  final VoidCallback onBlogPressed;
-  final VoidCallback onLikePressed;
-
-  final String title;
-  final String content;
-  final String date;
-  final bool liked;
+  final BlogEntry blogEntry;
 
   const BlogCard(
       {super.key,
-      required this.title,
-      required this.content,
-      required this.date,
-      required this.liked,
-      required this.onBlogPressed,
-      required this.onLikePressed});
+      required this.blogEntry});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
         onTap: () { 
-          onBlogPressed(); 
+          print("tapped " + blogEntry.id); 
         },
         child: Column(
         children: [
           ListTile(
-            title: Text(title),
+            title: Text(blogEntry.title),
           ),
           Padding(
             padding: const EdgeInsets.all(15),
             child: ListBody(
               children: [
-                Text(content),
+                Text(blogEntry.content),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Text(date), Like(liked: liked, onLikePressed: onLikePressed,)],
+                  children: [Text(blogEntry.creationDate.toString()), Like(liked: blogEntry.liked, onLikePressed: () { print("liked " + blogEntry.id); },)],
                 )
               ],
             ),
