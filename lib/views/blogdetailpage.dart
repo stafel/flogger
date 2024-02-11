@@ -9,7 +9,7 @@ class BlogDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ReusableScaffold(child: Center(
+    return ReusableScaffold(showIcon: false, child: Center(
       child: Column(
         children: [
           Row( children: [Text("Title"), Text(entry.title)]),

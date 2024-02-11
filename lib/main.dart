@@ -86,19 +86,22 @@ class BlogList extends StatelessWidget {
 // Contains general scaffold data to be reused in pages
 class ReusableScaffold extends StatelessWidget {
   final Widget child;
+  final bool showIcon;
+  final bool showDrawer;
 
-  const ReusableScaffold({super.key, required this.child});
+  const ReusableScaffold({super.key, required this.child, this.showIcon=false, this.showDrawer=false});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BlogApi>(
               create: (_) => BlogApi(),
               child: Scaffold(
-        drawer: const CustomDrawer(),
+        drawer: showDrawer ? const CustomDrawer() : null,
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(AppLocalizations.of(context)!.title),
-          leading: const LogoDrawer(),
+          leading: showIcon ? const LogoDrawer() : null,
+          actions: [const LoginIconButton()]
         ),
         body: child
     ));
@@ -111,7 +114,7 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ReusableScaffold(child: Center(
+    return ReusableScaffold(showIcon: true, showDrawer: true, child: Center(
           child: ChangeNotifierProvider<Blog>(
               create: (_) => Blog(),
               child: Column(

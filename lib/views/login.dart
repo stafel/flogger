@@ -56,7 +56,7 @@ class LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return ReusableScaffold(child: Form(key: _formKey, child: Form( 
+    return ReusableScaffold(showIcon: false, child: Form(key: _formKey, child: Form( 
       child: Column(
       children: [
         Text(AppLocalizations.of(context)!.username),

@@ -35,7 +35,39 @@ class LoginButton extends StatelessWidget {
       return Text(appCtx.connecting);
     });
   }
+}
 
+// shows login/logout icon button depending on api status
+class LoginIconButton extends StatelessWidget {
+  const LoginIconButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<BlogApi>(builder: (ctx, api, _) {
+
+      var appCtx = AppLocalizations.of(context)!;
+
+      if (api.status == BlogApiStatus.conError) {
+        return const Icon(Icons.error);
+      }
+
+      if (api.status == BlogApiStatus.conAnonym) {
+        return IconButton(
+          onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => LoginView()));}, 
+          icon: const Icon(Icons.login)
+          );
+      }
+
+      if (api.status == BlogApiStatus.conLogin) {
+        return IconButton(
+          onPressed: () { print("logout"); }, 
+          icon: const Icon(Icons.logout)
+          );
+      }
+
+      return const Icon(Icons.circle);
+    });
+  }
 }
 
 class CustomDrawer extends StatelessWidget {
