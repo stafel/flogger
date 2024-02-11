@@ -15,7 +15,7 @@ void main() {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  //GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 
   // This widget is the root of your application.
@@ -43,33 +43,8 @@ class MyApp extends StatelessWidget {
           ))),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      builder: (context, child) => BaseView(title: 'Frogger', child: child!),
-      navigatorKey: navigatorKey,
-      initialRoute: 'homeRoute',
-      routes: {
-        'homeRoute': (context) => const MyHomePage(),
-        'blogdetailRoute': (context) => const BlogDetailPage(),
-      },
+      home: const MyHomePage()
     );
-  }
-}
-
-// wrapper to reuse drawer and appbar
-class BaseView extends StatelessWidget {
-  const BaseView({super.key, required this.child, required this.title});
-  final Widget child;
-  final String title;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        drawer: const CustomDrawer(),
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text(title),
-          leading: const LogoDrawer(),
-        ),
-        body: child,
-      );
   }
 }
 
@@ -110,13 +85,33 @@ class BlogList extends StatelessWidget {
   }
 }
 
+// Contains general scaffold data to be reused in pages
+class ReusableScaffold extends StatelessWidget {
+  final Widget child;
+
+  const ReusableScaffold({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        drawer: const CustomDrawer(),
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Text(AppLocalizations.of(context)!.title),
+          leading: const LogoDrawer(),
+        ),
+        body: child
+    );
+  }
+}
+
 class MyHomePage extends StatelessWidget {
 
   const MyHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return ReusableScaffold(child: Center(
           child: ChangeNotifierProvider<Blog>(
               create: (_) => Blog(),
               child: Column(
@@ -131,7 +126,8 @@ class MyHomePage extends StatelessWidget {
                   ],
                 ),
           ),
-        );
+        )
+    );
   }
 }
 
