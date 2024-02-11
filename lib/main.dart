@@ -6,7 +6,6 @@ import 'package:frogger/views/blogdetailpage.dart';
 import 'package:frogger/views/newblogbutton.dart';
 import 'package:frogger/views/logodrawer.dart';
 import 'package:frogger/views/customdrawer.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
