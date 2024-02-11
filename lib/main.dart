@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frogger/models/blog.dart';
 import 'package:frogger/views/blogcard.dart';
-import 'package:frogger/views/blogdetailpage.dart';
 import 'package:frogger/views/newblogbutton.dart';
 import 'package:frogger/views/logodrawer.dart';
 import 'package:frogger/views/customdrawer.dart';
@@ -14,9 +13,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-
-  //GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
 
   // This widget is the root of your application.
   @override
@@ -48,6 +44,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// Display motto
 class MottoText extends StatelessWidget {
   const MottoText({super.key});
   
