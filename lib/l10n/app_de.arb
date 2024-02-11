@@ -11,5 +11,6 @@
   "login": "Anmelden",
   "logout": "Abmelden",
   "connecting": "Verbinden",
-  "error": "Error"
+  "error": "Error",
+  "loginError": "Fehler bei Anmeldung, Username oder Password falsch"
 }

@@ -23,5 +23,6 @@
   "login": "Login",
   "logout": "Logout",
   "connecting": "Connecting",
-  "error": "Error"
+  "error": "Error",
+  "loginError": "Login error, username or password incorrect"
 }
