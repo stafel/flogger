@@ -6,6 +6,8 @@ import 'package:frogger/views/blogdetailpage.dart';
 import 'package:frogger/views/newblogbutton.dart';
 import 'package:frogger/views/logodrawer.dart';
 import 'package:frogger/views/customdrawer.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   runApp(MyApp());
@@ -40,13 +42,14 @@ class MyApp extends StatelessWidget {
             fontSize: 40,
             fontStyle: FontStyle.italic,
           ))),
-
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       builder: (context, child) => BaseView(title: 'Frogger', child: child!),
       navigatorKey: navigatorKey,
       initialRoute: 'homeRoute',
       routes: {
         'homeRoute': (context) => const MyHomePage(),
-        'blogdetailRoute': (context) => BlogDetailPage(),
+        'blogdetailRoute': (context) => const BlogDetailPage(),
       },
     );
   }
@@ -68,6 +71,15 @@ class BaseView extends StatelessWidget {
         ),
         body: child,
       );
+  }
+}
+
+class MottoText extends StatelessWidget {
+  const MottoText({super.key});
+  
+  @override
+  Widget build(BuildContext context) {
+    return Text(AppLocalizations.of(context)!.motto);
   }
 }
 
@@ -131,6 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Center(
           child: Column(
             children: [
+              const MottoText(),
               Expanded(
                   child: FutureBuilder(
                     future: blogEntries,

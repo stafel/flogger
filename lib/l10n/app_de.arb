@@ -1,0 +1,4 @@
+{
+  "motto": "Gequäke in Blogformat",
+  "nEntries": "{count, plural, =0{keine Einträge} =1{ein Eintrag} other{{count} Einträge}}"
+}
