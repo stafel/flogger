@@ -1,10 +1,12 @@
 
+import 'package:pocketbase/pocketbase.dart';
+
 class BlogEntry {
   //String uuid = const Uuid().v1();
   String id;
   String title;
   String content;
-  DateTime creationDate;
+  String creationDate;
   bool liked;
 
   BlogEntry(
@@ -26,10 +28,14 @@ class BlogEntry {
           id: id,
           title: title,
           content: content,
-          creationDate: DateTime.now(),
+          creationDate: DateTime.now().toString(),
           liked: false,
         ),
       _ => throw const FormatException('Failed to load blog entry.'),
     };
+  }
+
+  factory BlogEntry.fromRecord(RecordModel record) {
+    return BlogEntry(id: record.id, title: record.data['title'], content: record.data['content'], creationDate: record.created, liked: record.data['liked']);
   }
 }
