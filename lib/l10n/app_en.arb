@@ -14,5 +14,14 @@
         }
     }
   },
-  "connectionError": "Could not connect to the server"
+  "connectionError": "Could not connect to the server",
+  "enterUsername": "Please enter username",
+  "enterPassword": "Please enter password",
+  "username": "Username",
+  "password": "Password",
+  "account": "Account",
+  "login": "Login",
+  "logout": "Logout",
+  "connecting": "Connecting",
+  "error": "Error"
 }

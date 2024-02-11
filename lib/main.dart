@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frogger/models/blog.dart';
+import 'package:frogger/services/blogapi.dart';
 import 'package:frogger/views/blogcard.dart';
 import 'package:frogger/views/newblogbutton.dart';
 import 'package:frogger/views/logodrawer.dart';
@@ -90,7 +91,9 @@ class ReusableScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ChangeNotifierProvider<BlogApi>(
+              create: (_) => BlogApi(),
+              child: Scaffold(
         drawer: const CustomDrawer(),
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -98,7 +101,7 @@ class ReusableScaffold extends StatelessWidget {
           leading: const LogoDrawer(),
         ),
         body: child
-    );
+    ));
   }
 }
 

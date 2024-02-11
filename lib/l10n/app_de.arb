@@ -2,5 +2,14 @@
   "title": "Frogger",
   "motto": "Gequäke in Blogformat",
   "nEntries": "{count, plural, =0{keine Einträge} =1{ein Eintrag} other{{count} Einträge}}",
-  "connectionError": "Keine Verbindung zum Server"
+  "connectionError": "Keine Verbindung zum Server",
+  "enterUsername": "Bitte Benutzernamen eingeben",
+  "enterPassword": "Bitte Passwort eingeben",
+  "username": "Benutzername",
+  "password": "Passwort",
+  "account": "Account",
+  "login": "Anmelden",
+  "logout": "Abmelden",
+  "connecting": "Verbinden",
+  "error": "Error"
 }

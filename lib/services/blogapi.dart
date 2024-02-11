@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:frogger/models/blogentry.dart';
 import 'package:pocketbase/pocketbase.dart';
 
@@ -9,7 +10,7 @@ enum BlogApiStatus {
 }
 
 // singleton to keep logged in
-class BlogApi {
+class BlogApi extends ChangeNotifier {
   late PocketBase _pb;
   BlogApiStatus _status = BlogApiStatus.init;
 
@@ -22,6 +23,7 @@ class BlogApi {
     } catch (e) {
       _status = BlogApiStatus.conError;
     }
+    notifyListeners();
   }
 
   static final BlogApi _instance = BlogApi._privateConstructor();
@@ -39,6 +41,7 @@ class BlogApi {
     } catch (e) {
       _status = BlogApiStatus.conAnonym;
     }
+    notifyListeners();
     return false;
   }
 
