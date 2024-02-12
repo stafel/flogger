@@ -121,11 +121,17 @@ class MyHomePage extends StatelessWidget {
                  children: [
                     const MottoText(),
                     BlogList(),
-                    NewBlogButton(
-                        text: "Add new blog",
-                        onPressed: () {
-                          print("Add entry");
-                        }),
+                    Consumer<BlogApi>(builder: (ctx, api, _) {
+                      if (api.status == BlogApiStatus.conLogin) {
+                      return NewBlogButton(
+                          text: "Add new blog",
+                          onPressed: () {
+                            print("Add entry");
+                          });
+                      }
+
+                      return SizedBox();
+                    }),
                   ],
                 ),
           ),

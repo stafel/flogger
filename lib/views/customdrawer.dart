@@ -27,7 +27,7 @@ class LoginButton extends StatelessWidget {
 
       if (api.status == BlogApiStatus.conLogin) {
         return TextButton(
-          onPressed: () { print("logout"); }, 
+          onPressed: () { api.logout(); }, 
           child: Text(appCtx.logout)
           );
       }
@@ -60,7 +60,7 @@ class LoginIconButton extends StatelessWidget {
 
       if (api.status == BlogApiStatus.conLogin) {
         return IconButton(
-          onPressed: () { print("logout"); }, 
+          onPressed: () { api.logout(); }, 
           icon: const Icon(Icons.logout)
           );
       }

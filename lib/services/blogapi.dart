@@ -32,11 +32,12 @@ class BlogApi extends ChangeNotifier {
     return _instance;
   }
 
-  // returns true if logged in
+  // trys to log in, returns true if logged in
   Future<bool> login(String uname, String pass) async {
     try {
       await _pb.collection('users').authWithPassword(uname, pass);
       _status = BlogApiStatus.conLogin;
+      notifyListeners();
       return true;
     } catch (e) {
       _status = BlogApiStatus.conAnonym;
@@ -45,6 +46,7 @@ class BlogApi extends ChangeNotifier {
     return false;
   }
 
+  // gets list of all blog entries
   Future<List<BlogEntry>> fetchBlogs() async {
     List<BlogEntry> blogs = [];
 
@@ -53,5 +55,14 @@ class BlogApi extends ChangeNotifier {
     records.forEach((element) { blogs.add( BlogEntry.fromRecord( element ) ); });
 
     return blogs;
+  }
+
+  // clears auth store and logs user out if logged in
+  logout() {
+    if (_status == BlogApiStatus.conLogin) {
+      _pb.authStore.clear();
+      _status = BlogApiStatus.conAnonym;
+      notifyListeners();
+    }
   }
 }
