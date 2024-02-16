@@ -11,15 +11,17 @@ enum BlogState {
 }
 
 class Blog extends ChangeNotifier {
-  /// Internal, private state of the cart.
+  /// Internal, private state of the blog.
   final List<BlogEntry> _items = [];
 
   BlogState _state = BlogState.loading;
 
   BlogState get state => _state;
 
-  /// An unmodifiable view of the items in the cart.
+  /// An unmodifiable view of the items in the blog.
   UnmodifiableListView<BlogEntry> get items => UnmodifiableListView(_items);
+
+  final BlogApi? api; // reference to the pb blog api
 
   /// Adds [item] to blogs. This and [removeAll] are the only ways to modify the
   /// blogs from the outside.
@@ -29,7 +31,7 @@ class Blog extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Removes all items from the cart.
+  /// Removes all items from the blog.
   void removeAll() {
     _items.clear();
     // This call tells the widgets that are listening to this model to rebuild.
@@ -47,9 +49,11 @@ class Blog extends ChangeNotifier {
      notifyListeners();
   }
 
-  Blog() {
-    BlogApi().fetchBlogs()
-      .then((blogs) { _addAll(blogs); })
-      .onError((error, stackTrace) { _setState(BlogState.error); });
+  Blog({this.api}) {
+    if (api != null) {
+      api!.fetchBlogs()
+        .then((blogs) { _addAll(blogs); })
+        .onError((error, stackTrace) { _setState(BlogState.error); });
+    }
   }
 }

@@ -115,8 +115,8 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ReusableScaffold(showIcon: true, showDrawer: true, child: Center(
-          child: ChangeNotifierProvider<Blog>(
-              create: (_) => Blog(),
+          child: Consumer<BlogApi>( builder: (ctx, api, _) { return ChangeNotifierProvider<Blog>(
+              create: (_) => Blog(api: api),
               child: Column(
                  children: [
                     const MottoText(),
@@ -134,6 +134,7 @@ class MyHomePage extends StatelessWidget {
                     }),
                   ],
                 ),
+          );}
           ),
         )
     );
