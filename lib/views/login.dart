@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:frogger/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -8,11 +7,12 @@ class UsernameField extends StatelessWidget {
   final TextEditingController controller;
 
   const UsernameField({super.key, required this.controller});
-  
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      //autovalidateMode: AutovalidateMode.onUserInteraction,
       // The validator receives the text that the user has entered.
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -28,7 +28,7 @@ class PasswordField extends StatelessWidget {
   final TextEditingController controller;
 
   const PasswordField({super.key, required this.controller});
-  
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -36,6 +36,7 @@ class PasswordField extends StatelessWidget {
       obscureText: true,
       enableSuggestions: false,
       autocorrect: false,
+      //autovalidateMode: AutovalidateMode.onUserInteraction,
       // The validator receives the text that the user has entered.
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -57,7 +58,8 @@ class LoginError extends StatelessWidget {
       return Text(AppLocalizations.of(context)!.loginError);
     }
     return const Text("");
-  }}
+  }
+}
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -66,12 +68,10 @@ class LoginView extends StatefulWidget {
   LoginViewState createState() {
     return LoginViewState();
   }
-
 }
 
 class LoginViewState extends State<LoginView> {
-  
-  final _formKey = GlobalKey<FormState>();
+  final _formKeyLogin = GlobalKey<FormState>();
 
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -80,30 +80,41 @@ class LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return ReusableScaffold(showIcon: false, child: Form(key: _formKey, child: Form( 
-      child: Column(
-      children: [
-        Text(AppLocalizations.of(context)!.username),
-        UsernameField(controller: usernameController),
-        Text(AppLocalizations.of(context)!.password),
-        PasswordField(controller: passwordController),
-        ElevatedButton(onPressed: () {
-          if (_formKey.currentState!.validate()) {
-            BlogApi().login(usernameController.text, passwordController.text).then((isLoggedIn) { 
-              if (isLoggedIn) {
-                Navigator.of(context).pop(); // TODO: check if context still valid
-              } else {
-                setState(() {
-                  loginError = true;
-                });
-              }
-             });
-          }
-        },
-        child: Text(AppLocalizations.of(context)!.login),
-        ),
-        LoginError(hasError: loginError),
-      ],
-    ))));
+    return ReusableScaffold(
+        showIcon: false,
+        child: Form(
+            key: _formKeyLogin,
+            child: Column(
+              children: [
+                Text(AppLocalizations.of(context)!.username),
+                UsernameField(controller: usernameController),
+                Text(AppLocalizations.of(context)!.password),
+                PasswordField(controller: passwordController),
+                Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_formKeyLogin.currentState!.validate()) {
+                          //_formKeyLogin.currentState!.save();
+                          BlogApi()
+                              .login(usernameController.text,
+                                  passwordController.text)
+                              .then((isLoggedIn) {
+                            if (isLoggedIn) {
+                              Navigator.of(context)
+                                  .pop(); // TODO: check if context still valid
+                            } else {
+                              setState(() {
+                                loginError = true;
+                              });
+                            }
+                          });
+                        }
+                      },
+                      child: Text(AppLocalizations.of(context)!.login),
+                    )),
+                LoginError(hasError: loginError),
+              ],
+            )));
   }
 }
