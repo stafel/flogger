@@ -8,7 +8,7 @@ void main() {
 
     test('A new item should be added', () {
       
-      var newBlogEntry = BlogEntry(id: "a", title: "test", content: "wow", creationDate: "01.01.2024", liked: false);
+      var newBlogEntry = BlogEntry(id: "a", title: "test", content: "wow", creationDate: "01.01.2024", liked: false, totalLikes: 0);
 
       blog.add(newBlogEntry);
       expect(blog.items.contains(newBlogEntry), true);

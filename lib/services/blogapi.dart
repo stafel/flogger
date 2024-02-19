@@ -16,6 +16,8 @@ class BlogApi extends ChangeNotifier {
 
   BlogApiStatus get status => _status;
 
+  late String userId;
+
   /*
   // singleton
   BlogApi._privateConstructor() {
@@ -50,7 +52,8 @@ class BlogApi extends ChangeNotifier {
   // trys to log in, returns true if logged in
   Future<bool> login(String uname, String pass) async {
     try {
-      await _pb.collection('users').authWithPassword(uname, pass);
+      final authRecord = await _pb.collection('users').authWithPassword(uname, pass);
+      userId = authRecord.record!.id;
       _status = BlogApiStatus.conLogin;
       notifyListeners();
       return true;
@@ -61,13 +64,47 @@ class BlogApi extends ChangeNotifier {
     return false;
   }
 
+  // returns all likes entries, can have filter
+  Future<List<RecordModel>> fetchLikes([String? userId, String? blogId]) {
+
+    String filter = "";
+
+    if (userId != null) {
+      filter = "user.id = \"$userId\"";
+    }
+
+    if (blogId != null) {
+      if (filter.isNotEmpty) {
+        filter += " && ";
+      }
+      filter += "blog.id = \"$blogId\"";
+    }
+
+    print("Filtering: '$filter'");
+
+    return _pb.collection('likes').getFullList(expand: "user,blog", filter: filter.isNotEmpty ? filter  : null);
+  }
+
   // gets list of all blog entries
   Future<List<BlogEntry>> fetchBlogs() async {
     List<BlogEntry> blogs = [];
 
-    final records = await _pb.collection('blogs').getFullList();
+    final records = await _pb.collection('blogs').getFullList(expand: "author");
 
-    for (var element in records) { blogs.add( BlogEntry.fromRecord( element ) ); }
+    final likedRecords = await fetchLikes();
+
+    for (var element in records) { 
+
+      var likes = likedRecords.where((e) => e.expand['blog']?[0].data['id'] == element.id).toList();
+
+      // check if we are logged in and if yes if we have liked this blog
+      var likedByMe = false;
+      if (status == BlogApiStatus.conLogin) {
+        likedRecords.any((e) => e.expand['blog']?[0].data['id'] == element.id && e.expand['user']?[0].data['id'] == userId);
+      }
+
+      blogs.add( BlogEntry.fromRecord( element, likes, likedByMe ) );
+    }
 
     return blogs;
   }
