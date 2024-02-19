@@ -20,7 +20,7 @@ class LoginButton extends StatelessWidget {
 
       if (api.status == BlogApiStatus.conAnonym) {
         return TextButton(
-          onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => LoginView()));}, 
+          onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginView()));}, 
           child: Text(appCtx.login)
           );
       }
@@ -53,7 +53,7 @@ class LoginIconButton extends StatelessWidget {
 
       if (api.status == BlogApiStatus.conAnonym) {
         return IconButton(
-          onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => LoginView()));}, 
+          onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginView()));}, 
           icon: const Icon(Icons.login)
           );
       }
@@ -80,7 +80,7 @@ class CustomDrawer extends StatelessWidget {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
-        children: [ListTile(title: Text(AppLocalizations.of(context)!.account),), LoginButton()],
+        children: [ListTile(title: Text(AppLocalizations.of(context)!.account),), const LoginButton()],
       ),
     );
   }

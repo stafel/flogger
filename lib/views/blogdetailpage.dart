@@ -12,8 +12,8 @@ class BlogDetailPage extends StatelessWidget {
     return ReusableScaffold(showIcon: false, child: Center(
       child: Column(
         children: [
-          Row( children: [Text("Title"), Text(entry.title)]),
-          Row( children: [Text("Body"), Text(entry.content)]),
+          Row( children: [const Text("Title"), Text(entry.title)]),
+          Row( children: [const Text("Body"), Text(entry.content)]),
         ]
       )
     )

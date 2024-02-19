@@ -14,7 +14,7 @@ import 'package:frogger/main.dart';
 void main() {
   testWidgets('Drawer opens', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+    await tester.pumpWidget(const MyApp());
 
 
     // check our title

@@ -52,7 +52,7 @@ class BlogApi extends ChangeNotifier {
 
     final records = await _pb.collection('blogs').getFullList();
 
-    records.forEach((element) { blogs.add( BlogEntry.fromRecord( element ) ); });
+    for (var element in records) { blogs.add( BlogEntry.fromRecord( element ) ); }
 
     return blogs;
   }

@@ -9,11 +9,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -120,7 +120,7 @@ class MyHomePage extends StatelessWidget {
               child: Column(
                  children: [
                     const MottoText(),
-                    BlogList(),
+                    const BlogList(),
                     Consumer<BlogApi>(builder: (ctx, api, _) {
                       if (api.status == BlogApiStatus.conLogin) {
                       return NewBlogButton(
@@ -130,7 +130,7 @@ class MyHomePage extends StatelessWidget {
                           });
                       }
 
-                      return SizedBox();
+                      return const SizedBox();
                     }),
                   ],
                 ),
