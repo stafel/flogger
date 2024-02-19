@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frogger/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:frogger/services/blogapi.dart';
+import 'package:provider/provider.dart';
 
 class UsernameField extends StatelessWidget {
   final TextEditingController controller;
@@ -92,26 +93,29 @@ class LoginViewState extends State<LoginView> {
                 PasswordField(controller: passwordController),
                 Padding(
                     padding: const EdgeInsets.all(5),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKeyLogin.currentState!.validate()) {
-                          //_formKeyLogin.currentState!.save();
-                          BlogApi()
-                              .login(usernameController.text,
-                                  passwordController.text)
-                              .then((isLoggedIn) {
-                            if (isLoggedIn) {
-                              Navigator.of(context)
-                                  .pop(); // TODO: check if context still valid
-                            } else {
-                              setState(() {
-                                loginError = true;
-                              });
-                            }
-                          });
-                        }
-                      },
-                      child: Text(AppLocalizations.of(context)!.login),
+                    child: Consumer<BlogApi>(builder: (ctx, api, _) {
+                      return ElevatedButton(
+                        onPressed: () {
+                          if (_formKeyLogin.currentState!.validate()) {
+                            //_formKeyLogin.currentState!.save();
+                            api
+                                .login(usernameController.text,
+                                    passwordController.text)
+                                .then((isLoggedIn) {
+                              if (isLoggedIn) {
+                                Navigator.of(context)
+                                    .pop(); // TODO: check if context still valid
+                              } else {
+                                setState(() {
+                                  loginError = true;
+                                });
+                              }
+                            });
+                          }
+                        },
+                        child: Text(AppLocalizations.of(context)!.login),
+                      );
+                    }
                     )),
                 LoginError(hasError: loginError),
               ],

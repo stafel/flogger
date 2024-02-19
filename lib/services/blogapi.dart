@@ -16,6 +16,8 @@ class BlogApi extends ChangeNotifier {
 
   BlogApiStatus get status => _status;
 
+  /*
+  // singleton
   BlogApi._privateConstructor() {
     try {
       _pb = PocketBase("http://dom.opc6.net:9050");
@@ -31,6 +33,19 @@ class BlogApi extends ChangeNotifier {
   factory BlogApi() {
     return _instance;
   }
+  */
+  
+  // normal class constructor
+  BlogApi() {
+    try {
+      _pb = PocketBase("http://dom.opc6.net:9050");
+      _status = BlogApiStatus.conAnonym;
+    } catch (e) {
+      _status = BlogApiStatus.conError;
+    }
+    notifyListeners();
+  }
+  
 
   // trys to log in, returns true if logged in
   Future<bool> login(String uname, String pass) async {

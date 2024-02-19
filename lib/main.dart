@@ -18,7 +18,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return ChangeNotifierProvider<BlogApi>(
+              create: (_) => BlogApi(),
+              child:
+    MaterialApp(
       title: 'Frogger',
       theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
@@ -41,7 +44,7 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       home: const MyHomePage()
-    );
+    ));
   }
 }
 
@@ -93,9 +96,7 @@ class ReusableScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<BlogApi>(
-              create: (_) => BlogApi(),
-              child: Scaffold(
+    return Scaffold(
         drawer: showDrawer ? const CustomDrawer() : null,
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -104,7 +105,7 @@ class ReusableScaffold extends StatelessWidget {
           //actions: [const LoginIconButton()] // TODO: This throws notifier assertion exceptions
         ),
         body: child
-    ));
+    );
   }
 }
 
