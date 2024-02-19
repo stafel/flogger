@@ -102,7 +102,7 @@ class ReusableScaffold extends StatelessWidget {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(AppLocalizations.of(context)!.title),
           leading: showIcon ? const LogoDrawer() : null,
-          //actions: [const LoginIconButton()] // TODO: This throws notifier assertion exceptions
+          actions: [LoginIconButton()] // TODO: This throws notifier assertion exceptions
         ),
         body: child
     );
