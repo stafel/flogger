@@ -30,7 +30,14 @@ class BlogCard extends StatelessWidget {
                 Text(blogEntry.content),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Text(blogEntry.creationDate.toString()), Like(liked: blogEntry.liked, onLikePressed: () { print("liked ${blogEntry.id}"); },)],
+                  children: [Text(blogEntry.creationDate.toString()), 
+                    Row(
+                      children: [
+                        blogEntry.totalLikes > 0 ? Text(blogEntry.totalLikes.toString()) : const Text(" "),
+                        Like(liked: blogEntry.liked, onLikePressed: () { print("liked ${blogEntry.id}"); },)
+                      ]
+                    )
+                  ],
                 )
               ],
             ),
