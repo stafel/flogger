@@ -95,13 +95,15 @@ class BlogApi extends ChangeNotifier {
 
     for (var element in records) { 
 
-      var likes = likedRecords.where((e) => e.expand['blog']?[0].data['id'] == element.id).toList();
+      var likes = likedRecords.where((e) => e.expand['blog']?[0].id == element.id).toList();
 
       // check if we are logged in and if yes if we have liked this blog
       var likedByMe = false;
       if (status == BlogApiStatus.conLogin) {
-        likedRecords.any((e) => e.expand['blog']?[0].data['id'] == element.id && e.expand['user']?[0].data['id'] == userId);
+        likedByMe = likedRecords.any((e) => e.expand['blog']?[0].id == element.id && e.expand['user']?[0].id == userId);
       }
+
+      //print("Blog id ${element.id} has ${likes} and liked by me ${likedByMe}");
 
       blogs.add( BlogEntry.fromRecord( element, likes, likedByMe ) );
     }
