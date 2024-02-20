@@ -13,7 +13,7 @@ void main() {
     var blogEntryOneLike = BlogEntry(id: "test", title: "test", content: "shocking stuff", creationDate: "01.01.2021", liked: false, totalLikes: 1);
 
     // Build our app and trigger a frame.
-    // Wrap in directionality to prevent no directionality error 
+    // Wrap in directionality to prevent no directionality error because of the missing framework
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
