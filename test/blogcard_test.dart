@@ -37,4 +37,32 @@ void main() {
     // total likes should be displayed
     expect(find.text('0'), findsNothing);
   });
+
+  testWidgets('Show not liked by me heart', (WidgetTester tester) async {
+    var blogEntryOneLike = BlogEntry(id: "test", title: "test", content: "shocking stuff", creationDate: "01.01.2021", liked: false, totalLikes: 0);
+
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(
+      Directionality(
+        textDirection: TextDirection.ltr,
+        child: BlogCard(blogEntry: blogEntryOneLike)
+      ));
+
+    // total likes should be displayed
+    expect(find.byIcon(Icons.favorite_border), findsOneWidget);
+  });
+
+  testWidgets('Show liked by me heart', (WidgetTester tester) async {
+    var blogEntryOneLike = BlogEntry(id: "test", title: "test", content: "shocking stuff", creationDate: "01.01.2021", liked: true, totalLikes: 0);
+
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(
+      Directionality(
+        textDirection: TextDirection.ltr,
+        child: BlogCard(blogEntry: blogEntryOneLike)
+      ));
+
+    // total likes should be displayed
+    expect(find.byIcon(Icons.favorite), findsOneWidget);
+  });
 }
