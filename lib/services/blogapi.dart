@@ -21,6 +21,10 @@ class BlogApi extends ChangeNotifier {
 
   final _logger = Logger();
 
+  static const String COL_USERS = "users";
+  static const String COL_BLOGS = "blogs";
+  static const String COL_LIKES = "likes";
+
   /*
   // singleton
   BlogApi._privateConstructor() {
@@ -55,7 +59,7 @@ class BlogApi extends ChangeNotifier {
   // trys to log in, returns true if logged in
   Future<bool> login(String uname, String pass) async {
     try {
-      final authRecord = await _pb.collection('users').authWithPassword(uname, pass);
+      final authRecord = await _pb.collection(COL_USERS).authWithPassword(uname, pass);
       userId = authRecord.record!.id;
       _status = BlogApiStatus.conLogin;
       notifyListeners();
@@ -65,6 +69,34 @@ class BlogApi extends ChangeNotifier {
     }
     notifyListeners();
     return false;
+  }
+
+  // creates a new likes entry for the blog and user if logged in
+  // will throw error if not logged in
+  Future<RecordModel> likeBlog(String blogId) async {
+    if (_status != BlogApiStatus.conLogin) {
+      return Future.error("Not logged in");
+    }
+
+    final body = <String, dynamic>{
+      "user": userId,
+      "blog": blogId
+    };
+
+    return await _pb.collection(COL_LIKES).create(body:body);
+  }
+
+  // removes likes entry
+  unlikeBlog(String blogId) async {
+    if (_status != BlogApiStatus.conLogin) {
+      return Future.error("Not logged in");
+    }
+
+    final record = await _pb.collection(COL_LIKES).getFirstListItem('user.id="$userId" && blog.id="$blogId"');
+
+    _logger.d("Found likes entry $record to delete");
+
+    await _pb.collection(COL_LIKES).delete(record.id);
   }
 
   // returns all likes entries, can have filter
@@ -113,6 +145,12 @@ class BlogApi extends ChangeNotifier {
 
     return blogs;
   }
+
+  /*
+  Future<String> createBlog(BlogEntry entry) async {
+    _bp.collection("blogs").
+  }
+  */
 
   // clears auth store and logs user out if logged in
   logout() {

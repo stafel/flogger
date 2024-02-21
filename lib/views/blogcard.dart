@@ -35,7 +35,7 @@ class BlogCard extends StatelessWidget {
                     Row(
                       children: [
                         blogEntry.totalLikes > 0 ? Text(blogEntry.totalLikes.toString()) : const Text(" "),
-                        Like(liked: blogEntry.liked, onLikePressed: () { Logger().d("liked ${blogEntry.id}"); },)
+                        Like(blogId: blogEntry.id, liked: blogEntry.liked)
                       ]
                     )
                   ],
