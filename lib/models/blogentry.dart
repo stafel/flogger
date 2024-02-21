@@ -19,7 +19,6 @@ class BlogEntry {
       required this.totalLikes});
 
   factory BlogEntry.fromJson(Map<String, dynamic> json) {
-    // print( json ); // for debugging
     return switch (json) {
       {
         '\$id': String id,

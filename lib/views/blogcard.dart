@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frogger/models/blogentry.dart';
 import 'package:frogger/views/blogdetailpage.dart';
 import 'package:frogger/views/like.dart';
+import 'package:logger/logger.dart';
 
 class BlogCard extends StatelessWidget {
   final BlogEntry blogEntry;
@@ -15,7 +16,7 @@ class BlogCard extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: () { 
-          print("tapped ${blogEntry.id}");
+          Logger().d("tapped ${blogEntry.id}");
           Navigator.push(context, MaterialPageRoute(builder: (context) => BlogDetailPage(entry: blogEntry)));
         },
         child: Column(
@@ -34,7 +35,7 @@ class BlogCard extends StatelessWidget {
                     Row(
                       children: [
                         blogEntry.totalLikes > 0 ? Text(blogEntry.totalLikes.toString()) : const Text(" "),
-                        Like(liked: blogEntry.liked, onLikePressed: () { print("liked ${blogEntry.id}"); },)
+                        Like(liked: blogEntry.liked, onLikePressed: () { Logger().d("liked ${blogEntry.id}"); },)
                       ]
                     )
                   ],

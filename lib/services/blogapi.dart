@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frogger/models/blogentry.dart';
+import 'package:logger/logger.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 enum BlogApiStatus {
@@ -17,6 +18,8 @@ class BlogApi extends ChangeNotifier {
   BlogApiStatus get status => _status;
 
   late String userId;
+
+  final _logger = Logger();
 
   /*
   // singleton
@@ -80,7 +83,7 @@ class BlogApi extends ChangeNotifier {
       filter += "blog.id = \"$blogId\"";
     }
 
-    print("Filtering: '$filter'");
+    _logger.d("Filtering likes: '$filter'");
 
     return _pb.collection('likes').getFullList(expand: "user,blog", filter: filter.isNotEmpty ? filter  : null);
   }
@@ -103,7 +106,7 @@ class BlogApi extends ChangeNotifier {
         likedByMe = likedRecords.any((e) => e.expand['blog']?[0].id == element.id && e.expand['user']?[0].id == userId);
       }
 
-      //print("Blog id ${element.id} has ${likes} and liked by me ${likedByMe}");
+      _logger.d("Blog id ${element.id} has $likes and liked by me $likedByMe");
 
       blogs.add( BlogEntry.fromRecord( element, likes, likedByMe ) );
     }

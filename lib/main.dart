@@ -6,6 +6,7 @@ import 'package:frogger/views/newblogbutton.dart';
 import 'package:frogger/views/logodrawer.dart';
 import 'package:frogger/views/customdrawer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -127,7 +128,7 @@ class MyHomePage extends StatelessWidget {
                       return NewBlogButton(
                           text: "Add new blog",
                           onPressed: () {
-                            print("Add entry");
+                            Logger().d("Add entry");
                           });
                       }
 
