@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frogger/models/blogentry.dart';
+import 'package:frogger/views/login.dart';
 import 'package:logger/logger.dart';
 import 'package:pocketbase/pocketbase.dart';
 
@@ -10,7 +11,6 @@ enum BlogApiStatus {
   conError,
 }
 
-// singleton to keep logged in
 class BlogApi extends ChangeNotifier {
   late PocketBase _pb;
   BlogApiStatus _status = BlogApiStatus.init;
@@ -24,25 +24,6 @@ class BlogApi extends ChangeNotifier {
   static const String COL_USERS = "users";
   static const String COL_BLOGS = "blogs";
   static const String COL_LIKES = "likes";
-
-  /*
-  // singleton
-  BlogApi._privateConstructor() {
-    try {
-      _pb = PocketBase("http://dom.opc6.net:9050");
-      _status = BlogApiStatus.conAnonym;
-    } catch (e) {
-      _status = BlogApiStatus.conError;
-    }
-    notifyListeners();
-  }
-
-  static final BlogApi _instance = BlogApi._privateConstructor();
-
-  factory BlogApi() {
-    return _instance;
-  }
-  */
   
   // normal class constructor
   BlogApi() {
@@ -73,7 +54,7 @@ class BlogApi extends ChangeNotifier {
 
   Future<bool> hasLikedBlog(String blogId) async {
     if (_status != BlogApiStatus.conLogin) {
-      return Future.error("Not logged in");
+      return Future.error(StateError("Not logged in"));
     }
 
     try {
@@ -89,11 +70,11 @@ class BlogApi extends ChangeNotifier {
   // will throw error if not logged in
   Future<RecordModel> likeBlog(String blogId) async {
     if (_status != BlogApiStatus.conLogin) {
-      return Future.error("Not logged in");
+      return Future.error(StateError("Not logged in"));
     }
 
     if (await hasLikedBlog(blogId)) {
-      return Future.error("Already liked");
+      return Future.error(StateError("Already liked"));
     }
 
     final body = <String, dynamic>{
@@ -107,7 +88,7 @@ class BlogApi extends ChangeNotifier {
   // removes likes entry
   unlikeBlog(String blogId) async {
     if (_status != BlogApiStatus.conLogin) {
-      return Future.error("Not logged in");
+      return Future.error(StateError("Not logged in"));
     }
 
     final record = await _pb.collection(COL_LIKES).getFirstListItem('user.id="$userId" && blog.id="$blogId"');
@@ -170,7 +151,7 @@ class BlogApi extends ChangeNotifier {
     _logger.d("element $e updated to ${e.liked}");
 
     if (_status != BlogApiStatus.conLogin) {
-      return;
+      throw StateError("Not logged in");
     }
 
     try {

@@ -13,9 +13,9 @@ class LogoDrawer extends StatelessWidget {
         children: [ 
           const NavBackButton(),
           IconButton( 
-          icon: Image.asset("images/logo.png"),
-          onPressed: () => Scaffold.of(context).openDrawer(),
-        ),
+            icon: Image.asset("images/logo.png"),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
         ]
     ),
     );

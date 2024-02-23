@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frogger/services/blogapi.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 class BlogEntry extends ChangeNotifier {
@@ -51,5 +52,13 @@ class BlogEntry extends ChangeNotifier {
     liked = false;
     totalLikes--;
     notifyListeners();
+  }
+
+  toggleLike() {
+    if (liked) {
+      unlike();
+    } else {
+      like();
+    }
   }
 }

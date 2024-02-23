@@ -13,29 +13,25 @@ class Like extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<BlogEntry>(builder: (ctx, entry, _) {
-      return Consumer<BlogApi>(builder: (ctx, api, _) {
-        return Row(
-          children: [
-            entry.totalLikes > 0 ? Text(entry.totalLikes.toString()) : const Text(" "),
-            IconButton(
-              onPressed: () { 
-                if (api.isLoggedIn()) {
-                  if (entry.liked) {
-                    entry.unlike();
-                  } else {
-                    entry.like();
-                  }
-                } else {
-                  final snackbarInfo = SnackBar(
-                    content: Text(AppLocalizations.of(ctx)!.loginFirst),
-                    action: SnackBarAction(label: AppLocalizations.of(ctx)!.login, onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginView())); })
-                    );
-                  ScaffoldMessenger.of(context).showSnackBar(snackbarInfo);
-                }
-              },
-              icon: Icon(entry.liked ? Icons.favorite : Icons.favorite_border))
-          ]);
-        });
+      return Row(
+        children: [
+          entry.totalLikes > 0 ? Text(entry.totalLikes.toString()) : const Text(" "),
+          IconButton(
+            onPressed: () { 
+              final loggedIn = Provider.of<BlogApi?>(context, listen: false)?.isLoggedIn() ?? false; // to allow testing without blogapi provider setup, listen false to prevent rebuild loop
+              if (loggedIn) {
+                entry.toggleLike();
+              } else {
+                final snackbarInfo = SnackBar(
+                  content: Text(AppLocalizations.of(ctx)!.loginFirst),
+                  action: SnackBarAction(label: AppLocalizations.of(ctx)!.login, onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginView())); })
+                  );
+                ScaffoldMessenger.of(context).showSnackBar(snackbarInfo);
+              }
+              
+            },
+            icon: Icon(entry.liked ? Icons.favorite : Icons.favorite_border))
+        ]);
     });
   }
 }

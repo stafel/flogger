@@ -14,6 +14,7 @@ void main() {
 
     // Build our app and trigger a frame.
     // Wrap in directionality to prevent no directionality error because of the missing framework
+    // Because the like widget consumes an api and a blogentry it will not work
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
