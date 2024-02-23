@@ -24,5 +24,6 @@
   "logout": "Logout",
   "connecting": "Connecting",
   "error": "Error",
-  "loginError": "Login error, username or password incorrect"
+  "loginError": "Login error, username or password incorrect",
+  "loginFirst": "Login first to like and comment"
 }

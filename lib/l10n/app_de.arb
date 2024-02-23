@@ -12,5 +12,6 @@
   "logout": "Abmelden",
   "connecting": "Verbinden",
   "error": "Error",
-  "loginError": "Fehler bei Anmeldung, Username oder Password falsch"
+  "loginError": "Fehler bei Anmeldung, Username oder Password falsch",
+  "loginFirst": "Melden Sie sich an um zu Kommentieren und Liken"
 }

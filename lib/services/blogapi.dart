@@ -198,4 +198,8 @@ class BlogApi extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  bool isLoggedIn() {
+    return _status == BlogApiStatus.conLogin;
+  }
 }
