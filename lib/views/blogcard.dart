@@ -3,6 +3,7 @@ import 'package:frogger/models/blogentry.dart';
 import 'package:frogger/views/blogdetailpage.dart';
 import 'package:frogger/views/like.dart';
 import 'package:logger/logger.dart';
+import 'package:provider/provider.dart';
 
 class BlogCard extends StatelessWidget {
   final BlogEntry blogEntry;
@@ -13,7 +14,10 @@ class BlogCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+
+    return ChangeNotifierProvider<BlogEntry>(
+              create: (_) => blogEntry,
+              child: Card(
       child: InkWell(
         onTap: () { 
           Logger().d("tapped ${blogEntry.id}");
@@ -31,13 +35,9 @@ class BlogCard extends StatelessWidget {
                 Text(blogEntry.content),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Text(blogEntry.creationDate.toString()), 
-                    Row(
-                      children: [
-                        blogEntry.totalLikes > 0 ? Text(blogEntry.totalLikes.toString()) : const Text(" "),
-                        Like(blogId: blogEntry.id, liked: blogEntry.liked)
-                      ]
-                    )
+                  children: [
+                    Text(blogEntry.creationDate.toString()), 
+                    Like()
                   ],
                 )
               ],
@@ -46,6 +46,6 @@ class BlogCard extends StatelessWidget {
         ],
       ),
       ),
-    );
+    ));
   }
 }

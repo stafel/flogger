@@ -71,11 +71,29 @@ class BlogApi extends ChangeNotifier {
     return false;
   }
 
+  Future<bool> hasLikedBlog(String blogId) async {
+    if (_status != BlogApiStatus.conLogin) {
+      return Future.error("Not logged in");
+    }
+
+    try {
+      final record = await _pb.collection(COL_LIKES).getFirstListItem('user.id="$userId" && blog.id="$blogId"');
+      return true;
+    }
+    catch (ex) {
+      return false;
+    }
+  }
+
   // creates a new likes entry for the blog and user if logged in
   // will throw error if not logged in
   Future<RecordModel> likeBlog(String blogId) async {
     if (_status != BlogApiStatus.conLogin) {
       return Future.error("Not logged in");
+    }
+
+    if (await hasLikedBlog(blogId)) {
+      return Future.error("Already liked");
     }
 
     final body = <String, dynamic>{
@@ -143,7 +161,27 @@ class BlogApi extends ChangeNotifier {
       blogs.add( BlogEntry.fromRecord( element, likes, likedByMe ) );
     }
 
+    blogs.forEach((element) { element.addListener(() { updateBlogEntry(element); }); }); // wild and hacky
+
     return blogs;
+  }
+
+  updateBlogEntry(BlogEntry e) {
+    _logger.d("element $e updated to ${e.liked}");
+
+    if (_status != BlogApiStatus.conLogin) {
+      return;
+    }
+
+    try {
+      if (e.liked) {
+        likeBlog(e.id);
+      } else {
+        unlikeBlog(e.id);
+      }
+    } catch (ex) {
+      _logger.d(ex);
+    }
   }
 
   /*

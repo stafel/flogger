@@ -51,9 +51,20 @@ class Blog extends ChangeNotifier {
 
   Blog({this.api}) {
     if (api != null) {
-      api!.fetchBlogs()
-        .then((blogs) { _addAll(blogs); })
-        .onError((error, stackTrace) { _setState(BlogState.error); });
+
+      api!.addListener(() { updateFromPocketbase(); });
+
+      updateFromPocketbase();
     }
+  }
+
+  // reloads bloglist from pocketbase
+  updateFromPocketbase() {
+    _state = BlogState.loading;
+    removeAll();
+
+    api!.fetchBlogs()
+      .then((blogs) { _addAll(blogs); })
+      .onError((error, stackTrace) { _setState(BlogState.error); });
   }
 }

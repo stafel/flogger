@@ -1,7 +1,7 @@
-
+import 'package:flutter/material.dart';
 import 'package:pocketbase/pocketbase.dart';
 
-class BlogEntry {
+class BlogEntry extends ChangeNotifier {
   //String uuid = const Uuid().v1();
   String id;
   String title;
@@ -39,5 +39,17 @@ class BlogEntry {
 
   factory BlogEntry.fromRecord(RecordModel record, List<RecordModel> likes, bool likedByMe) {
     return BlogEntry(id: record.id, title: record.data['title'], content: record.data['content'], creationDate: record.created, liked: likedByMe, totalLikes: likes.length);
+  }
+
+  like() {
+    liked = true;
+    totalLikes++;
+    notifyListeners();
+  }
+
+  unlike() {
+    liked = false;
+    totalLikes--;
+    notifyListeners();
   }
 }
