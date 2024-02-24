@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frogger/models/blog.dart';
 import 'package:frogger/models/blogentry.dart';
 import 'package:frogger/services/blogapi.dart';
 import 'package:frogger/views/login.dart';
@@ -6,21 +7,27 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Like extends StatelessWidget {
-  const Like({
-    super.key
+  String blogId;
+
+  Like({
+    super.key,
+    required this.blogId
   });
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BlogEntry>(builder: (ctx, entry, _) {
+    return Consumer<Blog>(builder: (ctx, blog, _) {
+
+      final blogEntry = blog.getById(blogId)!;
+
       return Row(
         children: [
-          entry.totalLikes > 0 ? Text(entry.totalLikes.toString()) : const Text(" "),
+          blogEntry.totalLikes > 0 ? Text(blogEntry.totalLikes.toString()) : const Text(" "),
           IconButton(
             onPressed: () { 
               final loggedIn = Provider.of<BlogApi?>(context, listen: false)?.isLoggedIn() ?? false; // to allow testing without blogapi provider setup, listen false to prevent rebuild loop
               if (loggedIn) {
-                entry.toggleLike();
+                blogEntry.toggleLike();
               } else {
                 final snackbarInfo = SnackBar(
                   content: Text(AppLocalizations.of(ctx)!.loginFirst),
@@ -30,7 +37,7 @@ class Like extends StatelessWidget {
               }
               
             },
-            icon: Icon(entry.liked ? Icons.favorite : Icons.favorite_border))
+            icon: Icon(blogEntry.liked ? Icons.favorite : Icons.favorite_border))
         ]);
     });
   }

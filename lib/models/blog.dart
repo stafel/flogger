@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:frogger/models/blogentry.dart';
 import 'package:frogger/services/blogapi.dart';
+import 'package:provider/provider.dart';
 
 enum BlogState {
   loading,
@@ -66,5 +67,9 @@ class Blog extends ChangeNotifier {
     api!.fetchBlogs()
       .then((blogs) { _addAll(blogs); })
       .onError((error, stackTrace) { _setState(BlogState.error); });
+  }
+
+  BlogEntry? getById(String id) {
+    return items.where((element) => element.id == id).firstOrNull;
   }
 }
