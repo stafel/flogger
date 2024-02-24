@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:frogger/models/author.dart';
 
 import 'package:frogger/models/blogentry.dart';
 import 'package:frogger/views/blogcard.dart';
@@ -10,7 +11,7 @@ import 'package:frogger/views/blogcard.dart';
 
 void main() {
   testWidgets('Show number of likes one or more', (WidgetTester tester) async {
-    var blogEntryOneLike = BlogEntry(id: "test", title: "test", content: "shocking stuff", creationDate: "01.01.2021", liked: false, totalLikes: 1);
+    var blogEntryOneLike = BlogEntry(id: "test", title: "test", content: "shocking stuff", creationDate: "01.01.2021", liked: false, totalLikes: 1, author: User(id: "null", username: "username"));
 
     // Build our app and trigger a frame.
     // Wrap in directionality to prevent no directionality error because of the missing framework
@@ -26,7 +27,7 @@ void main() {
   });
 
   testWidgets('Show no number of likes one zero', (WidgetTester tester) async {
-    var blogEntryOneLike = BlogEntry(id: "test", title: "test", content: "shocking stuff", creationDate: "01.01.2021", liked: false, totalLikes: 0);
+    var blogEntryOneLike = BlogEntry(id: "test", title: "test", content: "shocking stuff", creationDate: "01.01.2021", liked: false, totalLikes: 0, author: User(id: "null", username: "username"));
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(
@@ -40,7 +41,7 @@ void main() {
   });
 
   testWidgets('Show not liked by me heart', (WidgetTester tester) async {
-    var blogEntryOneLike = BlogEntry(id: "test", title: "test", content: "shocking stuff", creationDate: "01.01.2021", liked: false, totalLikes: 0);
+    var blogEntryOneLike = BlogEntry(id: "test", title: "test", content: "shocking stuff", creationDate: "01.01.2021", liked: false, totalLikes: 0, author: User(id: "null", username: "username"));
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(
@@ -54,7 +55,7 @@ void main() {
   });
 
   testWidgets('Show liked by me heart', (WidgetTester tester) async {
-    var blogEntryOneLike = BlogEntry(id: "test", title: "test", content: "shocking stuff", creationDate: "01.01.2021", liked: true, totalLikes: 0);
+    var blogEntryOneLike = BlogEntry(id: "test", title: "test", content: "shocking stuff", creationDate: "01.01.2021", liked: true, totalLikes: 0, author: User(id: "null", username: "username"));
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(

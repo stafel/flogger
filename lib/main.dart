@@ -92,18 +92,25 @@ class ReusableScaffold extends StatelessWidget {
   final Widget child;
   final bool showIcon;
   final bool showDrawer;
+  final String? title;
 
-  const ReusableScaffold({super.key, required this.child, this.showIcon=false, this.showDrawer=false});
+  const ReusableScaffold({super.key, required this.child, this.showIcon=false, this.showDrawer=false, this.title});
 
   @override
   Widget build(BuildContext context) {
+
+    String titleText = AppLocalizations.of(context)!.title;
+    if (title != null) {
+      titleText = title!;
+    }
+
     return Scaffold(
         drawer: showDrawer ? const CustomDrawer() : null,
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text(AppLocalizations.of(context)!.title),
+          title: Text(titleText),
           leading: showIcon ? const LogoDrawer() : null,
-          actions: [LoginIconButton()] // TODO: This throws notifier assertion exceptions
+          actions: [LoginIconButton()]
         ),
         body: child
     );

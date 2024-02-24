@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frogger/models/blogentry.dart';
+import 'package:frogger/views/authorinfo.dart';
 import 'package:frogger/views/blogdetailpage.dart';
 import 'package:frogger/views/like.dart';
 import 'package:logger/logger.dart';
@@ -33,10 +34,10 @@ class BlogCard extends StatelessWidget {
             child: ListBody(
               children: [
                 Text(blogEntry.content),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(blogEntry.creationDate.toString()), 
+                    Authorinfo(), 
                     Like()
                   ],
                 )
