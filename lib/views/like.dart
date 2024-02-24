@@ -25,9 +25,15 @@ class Like extends StatelessWidget {
           blogEntry.totalLikes > 0 ? Text(blogEntry.totalLikes.toString()) : const Text(" "),
           IconButton(
             onPressed: () { 
-              final loggedIn = Provider.of<BlogApi?>(context, listen: false)?.isLoggedIn() ?? false; // to allow testing without blogapi provider setup, listen false to prevent rebuild loop
+              final api = Provider.of<BlogApi?>(context, listen: false);
+              final loggedIn = api?.isLoggedIn() ?? false; // to allow testing without blogapi provider setup, listen false to prevent rebuild loop
               if (loggedIn) {
                 blogEntry.toggleLike();
+                if (blogEntry.liked) {
+                  blog.likeBlog(blogId); // does a nonawait work?
+                } else {
+                  blog.unlikeBlog(blogId);
+                }
               } else {
                 final snackbarInfo = SnackBar(
                   content: Text(AppLocalizations.of(ctx)!.loginFirst),

@@ -72,4 +72,14 @@ class Blog extends ChangeNotifier {
   BlogEntry? getById(String id) {
     return items.where((element) => element.id == id).firstOrNull;
   }
+
+  likeBlog(String blogId) {
+    api?.likeBlog(blogId);
+    notifyListeners();
+  }
+
+  unlikeBlog(String blogId) {
+    api?.unlikeBlog(blogId);
+    notifyListeners();
+  }
 }
