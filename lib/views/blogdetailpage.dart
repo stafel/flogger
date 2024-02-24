@@ -3,6 +3,7 @@ import 'package:frogger/main.dart';
 import 'package:frogger/models/blogentry.dart';
 import 'package:frogger/services/blogapi.dart';
 import 'package:frogger/views/authorinfo.dart';
+import 'package:frogger/views/like.dart';
 import 'package:provider/provider.dart';
 
 class BlogDetailPage extends StatelessWidget {
@@ -17,8 +18,7 @@ class BlogDetailPage extends StatelessWidget {
       child: ReusableScaffold(title: entry.title, showIcon: false, child: Center(
         child: Column(
           children: [
-            const Authorinfo(),
-            Row( children: [const Text("Title"), Text(entry.title)]),
+            //const Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Authorinfo(), Like()]), // creates problem with notification dispose
             Row( children: [const Text("Body"), Text(entry.content)]),
             Consumer<BlogApi>(builder: (ctx, api, _) {
               if (api.status == BlogApiStatus.conLogin) {
