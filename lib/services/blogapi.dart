@@ -171,6 +171,14 @@ class BlogApi extends ChangeNotifier {
     
   }
 
+  deleteBlog(String blogId) async {
+    if (_status != BlogApiStatus.conLogin) {
+      throw StateError("Not logged in");
+    }
+
+    await _pb.collection("blogs").delete(blogId);
+  }
+
   /*
   Future<String> createBlog(BlogEntry entry) async {
     _bp.collection("blogs").

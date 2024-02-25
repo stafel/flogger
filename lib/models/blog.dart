@@ -116,4 +116,11 @@ class Blog extends ChangeNotifier {
     _items.insert(index, entry);
     notifyListeners();
   }
+
+  deleteBlog(String blogId) {
+    api?.deleteBlog(blogId);
+    var blogentry = getById(blogId)!;
+    _items.remove(blogentry);
+    notifyListeners();
+  }
 }

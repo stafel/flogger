@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:frogger/models/blog.dart';
+import 'package:provider/provider.dart';
 
 class DeleteBlogButton extends StatelessWidget {
   final String blogId;
@@ -10,7 +12,9 @@ class DeleteBlogButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        // TODO delete
+        final blog = Provider.of<Blog?>(context, listen: false);
+        blog?.deleteBlog(blogId);
+        Navigator.of(context).pop(); // TODO: check if context still valid
       },
       child: Text(
         AppLocalizations.of(context)!.deleteblog,
