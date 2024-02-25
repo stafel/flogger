@@ -163,12 +163,15 @@ class BlogApi extends ChangeNotifier {
       "author": e.author.id
     };
 
-    if (e.id == "") {
-      await _pb.collection(COL_BLOGS).create(body: body);
-    } else {
-      await _pb.collection(COL_BLOGS).update(e.id, body: body);
+    try {
+      if (e.id == "") {
+        await _pb.collection(COL_BLOGS).create(body: body);
+      } else {
+        await _pb.collection(COL_BLOGS).update(e.id, body: body);
+      }
+    } catch (ex) {
+      // todo feedback
     }
-    
   }
 
   deleteBlog(String blogId) async {
@@ -176,7 +179,11 @@ class BlogApi extends ChangeNotifier {
       throw StateError("Not logged in");
     }
 
-    await _pb.collection(COL_BLOGS).delete(blogId);
+    try {
+      await _pb.collection(COL_BLOGS).delete(blogId);
+    } catch (ex) {
+      // todo feedback
+    }
   }
 
   // clears auth store and logs user out if logged in

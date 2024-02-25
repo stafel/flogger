@@ -75,12 +75,20 @@ class Blog extends ChangeNotifier {
   }
 
   likeBlog(String blogId) {
-    api?.likeBlog(blogId);
+    try {
+      api?.likeBlog(blogId);
+    } catch (ex) {
+      // TODO do something with this error
+    }
     notifyListeners();
   }
 
   unlikeBlog(String blogId) {
-    api?.unlikeBlog(blogId);
+    try {
+      api?.unlikeBlog(blogId);
+    } catch (ex) {
+      // TODO do something with this error
+    }
     notifyListeners();
   }
 
@@ -95,7 +103,11 @@ class Blog extends ChangeNotifier {
   }
 
   createBlog(BlogEntry entry) {
-    api?.updateBlogEntry(entry);
+    try {
+      api?.updateBlogEntry(entry);
+    } catch (ex) {
+      // TODO do something with this error
+    }
     add(entry);
   }
 
@@ -110,7 +122,12 @@ class Blog extends ChangeNotifier {
   }
 
   updateBlog(BlogEntry entry) {
-    api?.updateBlogEntry(entry);
+    try {
+      api?.updateBlogEntry(entry);
+    } catch (ex) {
+      // TODO do something with this error
+    }
+
     final index = _items.indexWhere((element) => element.id == entry.id);
     _items.removeAt(index);
     _items.insert(index, entry);
@@ -118,7 +135,12 @@ class Blog extends ChangeNotifier {
   }
 
   deleteBlog(String blogId) {
-    api?.deleteBlog(blogId);
+    try {
+      api?.deleteBlog(blogId);
+    } catch (ex) {
+      // TODO do something with this error
+    }
+    
     var blogentry = getById(blogId)!;
     _items.remove(blogentry);
     notifyListeners();
