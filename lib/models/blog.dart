@@ -100,6 +100,16 @@ class Blog extends ChangeNotifier {
     add(entry);
   }
 
+  updateBlogSimple(String blogId, String title, String content) {
+
+    var blogentry = getById(blogId)!;
+
+    blogentry.title = title;
+    blogentry.content = content;
+
+    updateBlog(blogentry);
+  }
+
   updateBlog(BlogEntry entry) {
     api?.updateBlogEntry(entry);
     final index = _items.indexWhere((element) => element.id == entry.id);
