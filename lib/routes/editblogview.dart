@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frogger/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:frogger/models/blog.dart';
 import 'package:frogger/services/blogapi.dart';
 import 'package:frogger/widgets/reusablescaffold.dart';
 import 'package:provider/provider.dart';
@@ -29,11 +30,12 @@ class EditblogViewState extends State<EditblogView> {
         showIcon: false,
         child: Form(
             key: _formKeyLogin,
-            child: Column(
+            child: Consumer<Blog>(builder: (ctx, blog, _) { 
+                    return Column(
               children: [
                 Text(AppLocalizations.of(context)!.blogentrytitle),
                 TextFormField(
-                  controller: titleController,
+                  controller: titleController..text = widget.blogId == null ? "" : blog.getById(widget.blogId!)!.title,
                   autofocus: true, // focus this field as soon as it is visible
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
@@ -45,7 +47,7 @@ class EditblogViewState extends State<EditblogView> {
                 ),
                 Text(AppLocalizations.of(context)!.blogentrycontent),
                 TextFormField(
-                  controller: contentController,
+                  controller: contentController..text = widget.blogId == null ? "" : blog.getById(widget.blogId!)!.content,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -56,27 +58,25 @@ class EditblogViewState extends State<EditblogView> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(5),
-                  child: Consumer<BlogApi>(builder: (ctx, api, _) {
-                    return Center(child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKeyLogin.currentState!.validate()) {
-                          //_formKeyLogin.currentState!.save();
-                          //api
+                  child: Center(child: ElevatedButton(
+                    onPressed: () {
+                      if (_formKeyLogin.currentState!.validate()) {
+                        //_formKeyLogin.currentState!.save();
 
-                          if (widget.blogId == null) {
-                            // new blog
-                          } else {
-                            // edit existing
-                          }
-                          
-                          Navigator.of(context).pop(); // TODO check if still valid
+                        if (widget.blogId == null) {
+                          blog.createBlogSimple(titleController.text, contentController.text);
+                        } else {
+                          blog.updateBlogSimple(widget.blogId!, titleController.text, contentController.text);
                         }
-                      },
-                      child: Text(AppLocalizations.of(context)!.save),
-                    ));
-                  }
+                        
+                        Navigator.of(context).pop(); // TODO check if still valid
+                      }
+                    },
+                    child: Text(AppLocalizations.of(context)!.save),
+                  )
                 )),
-              ],
-            )));
+              ]);
+            })
+          ));
   }
 }
