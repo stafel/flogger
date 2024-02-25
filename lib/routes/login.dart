@@ -22,6 +22,7 @@ class UsernameField extends StatelessWidget {
         }
         return null;
       },
+      decoration: InputDecoration(border: const UnderlineInputBorder(), labelText: AppLocalizations.of(context)!.username),
     );
   }
 }
@@ -46,6 +47,7 @@ class PasswordField extends StatelessWidget {
         }
         return null;
       },
+      decoration: InputDecoration(border: const UnderlineInputBorder(), labelText: AppLocalizations.of(context)!.password),
     );
   }
 }
@@ -88,9 +90,7 @@ class LoginViewState extends State<LoginView> {
             key: _formKeyLogin,
             child: Column(
               children: [
-                Text(AppLocalizations.of(context)!.username),
                 UsernameField(controller: usernameController),
-                Text(AppLocalizations.of(context)!.password),
                 PasswordField(controller: passwordController),
                 Padding(
                     padding: const EdgeInsets.all(5),

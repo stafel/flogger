@@ -31,7 +31,6 @@ class EditblogViewState extends State<EditblogView> {
             child: Consumer<Blog>(builder: (ctx, blog, _) { 
                     return Column(
               children: [
-                Text(AppLocalizations.of(context)!.blogentrytitle),
                 TextFormField(
                   controller: titleController..text = widget.blogId == null ? "" : blog.getById(widget.blogId!)!.title,
                   autofocus: true, // focus this field as soon as it is visible
@@ -41,9 +40,9 @@ class EditblogViewState extends State<EditblogView> {
                       return AppLocalizations.of(context)!.emptyError;
                     }
                     return null;
-                  }
+                  },
+                  decoration: InputDecoration(border: const UnderlineInputBorder(), labelText: AppLocalizations.of(context)!.blogentrytitle),
                 ),
-                Text(AppLocalizations.of(context)!.blogentrycontent),
                 TextFormField(
                   controller: contentController..text = widget.blogId == null ? "" : blog.getById(widget.blogId!)!.content,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -52,7 +51,8 @@ class EditblogViewState extends State<EditblogView> {
                       return AppLocalizations.of(context)!.emptyError;
                     }
                     return null;
-                  }
+                  },
+                  decoration: InputDecoration(border: const UnderlineInputBorder(), labelText: AppLocalizations.of(context)!.blogentrycontent),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(5),
