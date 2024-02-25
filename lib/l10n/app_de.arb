@@ -16,5 +16,8 @@
   "loginFirst": "Melden Sie sich an um zu Kommentieren und Liken",
   "blogentrytitle": "Titel",
   "blogentrycontent": "Inhalt",
-  "save": "Speichern"
+  "save": "Speichern",
+  "createblog": "Neuen Blogbeitrag erstellen",
+  "editblog": "Blogbeitrag editieren",
+  "deleteblog": "Blogbeitrag löschen"
 }

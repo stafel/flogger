@@ -5,7 +5,9 @@ import 'package:frogger/services/blogapi.dart';
 import 'package:provider/provider.dart';
 
 class EditblogView extends StatefulWidget {
-  const EditblogView({super.key});
+  final String? blogId;
+
+  const EditblogView({super.key, this.blogId});
 
   @override
   EditblogViewState createState() {
@@ -22,6 +24,7 @@ class EditblogViewState extends State<EditblogView> {
   @override
   Widget build(BuildContext context) {
     return ReusableScaffold(
+        title: widget.blogId == null ? AppLocalizations.of(context)!.createblog : AppLocalizations.of(context)!.editblog,
         showIcon: false,
         child: Form(
             key: _formKeyLogin,
@@ -39,6 +42,12 @@ class EditblogViewState extends State<EditblogView> {
                         if (_formKeyLogin.currentState!.validate()) {
                           //_formKeyLogin.currentState!.save();
                           //api
+
+                          if (widget.blogId == null) {
+                            // new blog
+                          } else {
+                            // edit existing
+                          }
                           
                           Navigator.of(context).pop(); // TODO check if still valid
                         }

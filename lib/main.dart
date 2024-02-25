@@ -134,11 +134,7 @@ class MyHomePage extends StatelessWidget {
               const BlogList(),
               Consumer<BlogApi>(builder: (ctx, api, _) {
                 if (api.status == BlogApiStatus.conLogin) {
-                return NewBlogButton(
-                    text: "Add new blog",
-                    onPressed: () {
-                      Logger().d("Add entry");
-                    });
+                return NewBlogButton();
                 }
 
                 return const SizedBox();
