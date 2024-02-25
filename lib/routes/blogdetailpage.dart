@@ -4,6 +4,8 @@ import 'package:frogger/models/blog.dart';
 import 'package:frogger/models/blogentry.dart';
 import 'package:frogger/services/blogapi.dart';
 import 'package:frogger/widgets/authorinfo.dart';
+import 'package:frogger/widgets/deleteblogbutton.dart';
+import 'package:frogger/widgets/editblogbutton.dart';
 import 'package:frogger/widgets/like.dart';
 import 'package:frogger/widgets/reusablescaffold.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +37,9 @@ class BlogDetailPage extends StatelessWidget {
             Row( children: [const Text("Body"), Text(blogEntry.content)]),
             Consumer<BlogApi>(builder: (ctx, api, _) {
               if (api.status == BlogApiStatus.conLogin) {
-                return Text("Edit");
+                return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                  DeleteBlogButton(blogId: blogId), EditBlogButton(blogId: blogId)
+                ]);
               }
 
               return const SizedBox();
