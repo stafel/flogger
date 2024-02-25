@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:frogger/models/blog.dart';
-import 'package:frogger/models/blogentry.dart';
 import 'package:frogger/services/blogapi.dart';
 import 'package:frogger/routes/login.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Like extends StatelessWidget {
-  String blogId;
+  final String blogId;
 
-  Like({
+  const Like({
     super.key,
     required this.blogId
   });

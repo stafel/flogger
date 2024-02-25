@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frogger/main.dart';
 import 'package:frogger/models/blog.dart';
 import 'package:frogger/models/blogentry.dart';
 import 'package:frogger/services/blogapi.dart';

@@ -5,7 +5,6 @@ import 'package:frogger/models/author.dart';
 import 'package:frogger/models/blogentry.dart';
 import 'package:frogger/services/blogapi.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 enum BlogState {
   loading,
