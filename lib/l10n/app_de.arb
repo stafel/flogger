@@ -13,5 +13,8 @@
   "connecting": "Verbinden",
   "error": "Error",
   "loginError": "Fehler bei Anmeldung, Username oder Password falsch",
-  "loginFirst": "Melden Sie sich an um zu Kommentieren und Liken"
+  "loginFirst": "Melden Sie sich an um zu Kommentieren und Liken",
+  "blogentrytitle": "Titel",
+  "blogentrycontent": "Inhalt",
+  "save": "Speichern"
 }

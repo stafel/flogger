@@ -7,7 +7,7 @@ import 'package:frogger/models/author.dart';
 import 'package:frogger/models/blog.dart';
 
 import 'package:frogger/models/blogentry.dart';
-import 'package:frogger/views/blogcard.dart';
+import 'package:frogger/widgets/blogcard.dart';
 import 'package:provider/provider.dart';
 
 // Contains all required widgets for the blog entry to work

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frogger/views/navbackbutton.dart';
+import 'package:frogger/widgets/navbackbutton.dart';
 
 class LogoDrawer extends StatelessWidget {
   const LogoDrawer({
