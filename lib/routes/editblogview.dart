@@ -32,9 +32,28 @@ class EditblogViewState extends State<EditblogView> {
             child: Column(
               children: [
                 Text(AppLocalizations.of(context)!.blogentrytitle),
-                //
+                TextFormField(
+                  controller: titleController,
+                  autofocus: true, // focus this field as soon as it is visible
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return AppLocalizations.of(context)!.emptyError;
+                    }
+                    return null;
+                  }
+                ),
                 Text(AppLocalizations.of(context)!.blogentrycontent),
-                //
+                TextFormField(
+                  controller: contentController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return AppLocalizations.of(context)!.emptyError;
+                    }
+                    return null;
+                  }
+                ),
                 Padding(
                   padding: const EdgeInsets.all(5),
                   child: Consumer<BlogApi>(builder: (ctx, api, _) {

@@ -19,5 +19,6 @@
   "save": "Speichern",
   "createblog": "Neuen Blogbeitrag erstellen",
   "editblog": "Blogbeitrag editieren",
-  "deleteblog": "Blogbeitrag löschen"
+  "deleteblog": "Blogbeitrag löschen",
+  "emptyError": "Feld kann nicht leer sein"
 }

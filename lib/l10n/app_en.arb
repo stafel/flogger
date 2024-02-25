@@ -31,5 +31,6 @@
   "save": "Save",
   "createblog": "Create new blogpost",
   "editblog": "Edit this blogpost",
-  "deleteblog": "Delete this blogpost"
+  "deleteblog": "Delete this blogpost",
+  "emptyError": "This field cant be empty"
 }
