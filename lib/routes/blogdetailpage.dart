@@ -30,10 +30,10 @@ class BlogDetailPage extends StatelessWidget {
 
 
       return ReusableScaffold(title: blogEntry.title, showIcon: false, child: Center(
-        child: Column(
+        child: Card(child: Padding(padding: EdgeInsets.all(5) ,child: Column(
           children: [
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Authorinfo(blogId: blogId), Like(blogId: blogId)]), // creates problem with notification dispose
-            Row( children: [const Text("Body"), Text(blogEntry.content)]),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Authorinfo(blogId: blogId), Like(blogId: blogId)]),
+            Text(blogEntry.content, maxLines: 25),
             Consumer<BlogApi>(builder: (ctx, api, _) {
               if (api.status == BlogApiStatus.conLogin) {
                 return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -45,7 +45,7 @@ class BlogDetailPage extends StatelessWidget {
             }),
           ]
         )
-      ));
+      ))));
     }
     );
     }
