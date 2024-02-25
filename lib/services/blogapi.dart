@@ -152,7 +152,7 @@ class BlogApi extends ChangeNotifier {
 
   // depending on id will create or update blog entry
   updateBlogEntry(BlogEntry e) async {
-    _logger.d("element $e updated");
+    _logger.d("element $e with id ${e.id} updated");
 
     if (_status != BlogApiStatus.conLogin) {
       throw StateError("Not logged in");
@@ -164,7 +164,7 @@ class BlogApi extends ChangeNotifier {
       "author": e.author.id
     };
 
-    if (e.id != "") {
+    if (e.id == "") {
       await _pb.collection('blogs').create(body: body);
     } else {
       await _pb.collection('blogs').update(e.id, body: body);
