@@ -22,6 +22,20 @@ class EditblogViewState extends State<EditblogView> {
   final TextEditingController contentController = TextEditingController();
 
   @override
+  void initState() {
+    final blog = Provider.of<Blog?>(context, listen: false);
+    if (blog != null) {
+      titleController.text = widget.blogId == null ? "" : blog!.getById(widget.blogId!)!.title;
+      contentController.text = widget.blogId == null ? "" : blog.getById(widget.blogId!)!.content;
+    }
+
+    /*Future.delayed(Duration.zero, () {
+      Provider.of<Blog?>(context, listen: false);
+    });*/
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ReusableScaffold(
         title: widget.blogId == null ? AppLocalizations.of(context)!.createblog : AppLocalizations.of(context)!.editblog,
@@ -32,7 +46,7 @@ class EditblogViewState extends State<EditblogView> {
                     return Column(
               children: [
                 TextFormField(
-                  controller: titleController..text = widget.blogId == null ? "" : blog.getById(widget.blogId!)!.title,
+                  controller: titleController,
                   autofocus: true, // focus this field as soon as it is visible
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
@@ -44,7 +58,7 @@ class EditblogViewState extends State<EditblogView> {
                   decoration: InputDecoration(border: const UnderlineInputBorder(), labelText: AppLocalizations.of(context)!.blogentrytitle),
                 ),
                 TextFormField(
-                  controller: contentController..text = widget.blogId == null ? "" : blog.getById(widget.blogId!)!.content,
+                  controller: contentController,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
