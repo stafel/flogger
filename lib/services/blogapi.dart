@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frogger/models/blogentry.dart';
-import 'package:frogger/views/login.dart';
+import 'package:frogger/routes/login.dart';
 import 'package:logger/logger.dart';
 import 'package:pocketbase/pocketbase.dart';
 

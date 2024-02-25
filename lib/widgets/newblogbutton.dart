@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:frogger/views/editblogview.dart';
+import 'package:frogger/routes/editblogview.dart';
 
 class NewBlogButton extends StatelessWidget {
   const NewBlogButton({super.key});

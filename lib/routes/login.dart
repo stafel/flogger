@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frogger/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:frogger/services/blogapi.dart';
+import 'package:frogger/widgets/reusablescaffold.dart';
 import 'package:provider/provider.dart';
 
 class UsernameField extends StatelessWidget {

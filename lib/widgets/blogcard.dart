@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frogger/models/blog.dart';
 import 'package:frogger/models/blogentry.dart';
 import 'package:frogger/widgets/authorinfo.dart';
-import 'package:frogger/views/blogdetailpage.dart';
+import 'package:frogger/routes/blogdetailpage.dart';
 import 'package:frogger/widgets/like.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
