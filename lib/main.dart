@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frogger/models/blog.dart';
 import 'package:frogger/services/blogapi.dart';
-import 'package:frogger/views/blogcard.dart';
-import 'package:frogger/views/newblogbutton.dart';
-import 'package:frogger/views/logodrawer.dart';
-import 'package:frogger/views/customdrawer.dart';
+import 'package:frogger/widgets/blogcard.dart';
+import 'package:frogger/widgets/newblogbutton.dart';
+import 'package:frogger/widgets/logodrawer.dart';
+import 'package:frogger/widgets/customdrawer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +21,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BlogApi>(
               create: (_) => BlogApi(),
-              child:
+              child: Consumer<BlogApi>( builder: (ctx, api, _) { return ChangeNotifierProvider<Blog>(
+              create: (_) => Blog(api: api),
+              child: 
     MaterialApp(
       title: 'Frogger',
       theme: ThemeData(
@@ -45,8 +47,10 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       home: const MyHomePage()
-    ));
+    ));       
   }
+  ));
+}
 }
 
 // Display motto
@@ -81,7 +85,7 @@ class BlogList extends StatelessWidget {
             padding: const EdgeInsets.all(8),
               itemCount: blog.items.length,
               itemBuilder: (BuildContext context, int index) {
-                return BlogCard(blogEntry: blog.items[index]);
+                return BlogCard(blogId: blog.items[index].id);
               }));
     });
   }
@@ -124,26 +128,22 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ReusableScaffold(showIcon: true, showDrawer: true, child: Center(
-          child: Consumer<BlogApi>( builder: (ctx, api, _) { return ChangeNotifierProvider<Blog>(
-              create: (_) => Blog(api: api),
-              child: Column(
-                 children: [
-                    const MottoText(),
-                    const BlogList(),
-                    Consumer<BlogApi>(builder: (ctx, api, _) {
-                      if (api.status == BlogApiStatus.conLogin) {
-                      return NewBlogButton(
-                          text: "Add new blog",
-                          onPressed: () {
-                            Logger().d("Add entry");
-                          });
-                      }
+          child: Column(
+            children: [
+              const MottoText(),
+              const BlogList(),
+              Consumer<BlogApi>(builder: (ctx, api, _) {
+                if (api.status == BlogApiStatus.conLogin) {
+                return NewBlogButton(
+                    text: "Add new blog",
+                    onPressed: () {
+                      Logger().d("Add entry");
+                    });
+                }
 
-                      return const SizedBox();
-                    }),
-                  ],
-                ),
-          );}
+                return const SizedBox();
+              }),
+            ],
           ),
         )
     );

@@ -25,5 +25,8 @@
   "connecting": "Connecting",
   "error": "Error",
   "loginError": "Login error, username or password incorrect",
-  "loginFirst": "Login first to like and comment"
+  "loginFirst": "Login first to like and comment",
+  "blogentrytitle": "Title",
+  "blogentrycontent": "Content",
+  "save": "Speichern"
 }

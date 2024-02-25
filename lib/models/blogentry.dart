@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:frogger/models/author.dart';
-import 'package:frogger/services/blogapi.dart';
 import 'package:pocketbase/pocketbase.dart';
 
-class BlogEntry extends ChangeNotifier {
+class BlogEntry {
   //String uuid = const Uuid().v1();
   String id;
   String title;
@@ -55,13 +53,11 @@ class BlogEntry extends ChangeNotifier {
   like() {
     liked = true;
     totalLikes++;
-    notifyListeners();
   }
 
   unlike() {
     liked = false;
     totalLikes--;
-    notifyListeners();
   }
 
   toggleLike() {

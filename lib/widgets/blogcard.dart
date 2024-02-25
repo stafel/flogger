@@ -1,28 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:frogger/models/blog.dart';
 import 'package:frogger/models/blogentry.dart';
-import 'package:frogger/views/authorinfo.dart';
+import 'package:frogger/widgets/authorinfo.dart';
 import 'package:frogger/views/blogdetailpage.dart';
-import 'package:frogger/views/like.dart';
+import 'package:frogger/widgets/like.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BlogCard extends StatelessWidget {
-  final BlogEntry blogEntry;
+  final String blogId;
 
   const BlogCard(
       {super.key,
-      required this.blogEntry});
+      required this.blogId});
 
   @override
   Widget build(BuildContext context) {
 
-    return ChangeNotifierProvider<BlogEntry>(
-              create: (_) => blogEntry,
-              child: Card(
+    return Consumer<Blog>(builder: (ctx, blog, _) {
+
+      final maybeBlogEntry = blog.getById(blogId);
+
+      // show an error if we found no blog with this id
+      if (maybeBlogEntry == null) {
+        return Text(AppLocalizations.of(context)!.error);
+      }
+
+      final BlogEntry blogEntry = maybeBlogEntry; 
+
+      return Card(
       child: InkWell(
         onTap: () { 
           Logger().d("tapped ${blogEntry.id}");
-          Navigator.push(context, MaterialPageRoute(builder: (context) => BlogDetailPage(entry: blogEntry)));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => BlogDetailPage(blogId: blogId)));
         },
         child: Column(
         children: [
@@ -34,11 +45,11 @@ class BlogCard extends StatelessWidget {
             child: ListBody(
               children: [
                 Text(blogEntry.content),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Authorinfo(), 
-                    Like()
+                    Authorinfo(blogId: blogId), 
+                    Like(blogId: blogId)
                   ],
                 )
               ],
@@ -47,6 +58,8 @@ class BlogCard extends StatelessWidget {
         ],
       ),
       ),
-    ));
+    );
+    }
+    );
   }
 }

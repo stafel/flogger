@@ -142,7 +142,7 @@ class BlogApi extends ChangeNotifier {
       blogs.add( BlogEntry.fromRecord( element, likes, likedByMe ) );
     }
 
-    blogs.forEach((element) { element.addListener(() { updateBlogEntry(element); }); }); // wild and hacky
+    // blogs.forEach((element) { element.addListener(() { updateBlogEntry(element); }); }); // wild and hacky
 
     return blogs;
   }
