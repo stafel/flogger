@@ -38,7 +38,7 @@ class EditblogViewState extends State<EditblogView> {
                 Padding(
                   padding: const EdgeInsets.all(5),
                   child: Consumer<BlogApi>(builder: (ctx, api, _) {
-                    return ElevatedButton(
+                    return Center(child: ElevatedButton(
                       onPressed: () {
                         if (_formKeyLogin.currentState!.validate()) {
                           //_formKeyLogin.currentState!.save();
@@ -54,7 +54,7 @@ class EditblogViewState extends State<EditblogView> {
                         }
                       },
                       child: Text(AppLocalizations.of(context)!.save),
-                    );
+                    ));
                   }
                 )),
               ],
