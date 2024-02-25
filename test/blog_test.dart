@@ -13,6 +13,6 @@ void main() {
 
       blog.add(newBlogEntry);
       expect(blog.items.contains(newBlogEntry), true);
-    });    
+    });
   });
 }
