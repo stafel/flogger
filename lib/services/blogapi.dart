@@ -117,14 +117,14 @@ class BlogApi extends ChangeNotifier {
 
     _logger.d("Filtering likes: '$filter'");
 
-    return _pb.collection('likes').getFullList(expand: "user,blog", filter: filter.isNotEmpty ? filter  : null);
+    return _pb.collection(COL_LIKES).getFullList(expand: "user,blog", filter: filter.isNotEmpty ? filter  : null);
   }
 
   // gets list of all blog entries
   Future<List<BlogEntry>> fetchBlogs() async {
     List<BlogEntry> blogs = [];
 
-    final records = await _pb.collection('blogs').getFullList(expand: "author");
+    final records = await _pb.collection(COL_BLOGS).getFullList(expand: "author");
 
     final likedRecords = await fetchLikes();
 
@@ -164,9 +164,9 @@ class BlogApi extends ChangeNotifier {
     };
 
     if (e.id == "") {
-      await _pb.collection('blogs').create(body: body);
+      await _pb.collection(COL_BLOGS).create(body: body);
     } else {
-      await _pb.collection('blogs').update(e.id, body: body);
+      await _pb.collection(COL_BLOGS).update(e.id, body: body);
     }
     
   }
@@ -176,14 +176,8 @@ class BlogApi extends ChangeNotifier {
       throw StateError("Not logged in");
     }
 
-    await _pb.collection("blogs").delete(blogId);
+    await _pb.collection(COL_BLOGS).delete(blogId);
   }
-
-  /*
-  Future<String> createBlog(BlogEntry entry) async {
-    _bp.collection("blogs").
-  }
-  */
 
   // clears auth store and logs user out if logged in
   logout() {
