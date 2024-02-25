@@ -18,6 +18,7 @@ class BlogApi extends ChangeNotifier {
   BlogApiStatus get status => _status;
 
   late String userId;
+  late String userName;
 
   final _logger = Logger();
 
@@ -42,6 +43,7 @@ class BlogApi extends ChangeNotifier {
     try {
       final authRecord = await _pb.collection(COL_USERS).authWithPassword(uname, pass);
       userId = authRecord.record!.id;
+      userName = authRecord.record!.data['username'];
       _status = BlogApiStatus.conLogin;
       notifyListeners();
       return true;
@@ -147,22 +149,27 @@ class BlogApi extends ChangeNotifier {
     return blogs;
   }
 
-  updateBlogEntry(BlogEntry e) {
-    _logger.d("element $e updated to ${e.liked}");
+
+  // depending on id will create or update blog entry
+  updateBlogEntry(BlogEntry e) async {
+    _logger.d("element $e updated");
 
     if (_status != BlogApiStatus.conLogin) {
       throw StateError("Not logged in");
     }
 
-    try {
-      if (e.liked) {
-        likeBlog(e.id);
-      } else {
-        unlikeBlog(e.id);
-      }
-    } catch (ex) {
-      _logger.d(ex);
+    final body = <String, dynamic>{
+      "title": e.title,
+      "content": e.content,
+      "author": e.author.id
+    };
+
+    if (e.id != "") {
+      await _pb.collection('blogs').create(body: body);
+    } else {
+      await _pb.collection('blogs').update(e.id, body: body);
     }
+    
   }
 
   /*
