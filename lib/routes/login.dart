@@ -14,6 +14,7 @@ class UsernameField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      autofocus: true, // focus this field as soon as it is visible
       //autovalidateMode: AutovalidateMode.onUserInteraction,
       // The validator receives the text that the user has entered.
       validator: (value) {
